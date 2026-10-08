@@ -1,0 +1,8 @@
+{
+  "name": "adventure-website",
+  "private": true,
+  "description": "Adventure — Romblon island-hopping website (static HTML/CSS/JS)",
+  "scripts": {
+    "dev": "npx --yes http-server -p 5173 -c-1 -o"
+  }
+}

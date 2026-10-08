@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Adventure — Island-hop Romblon, ferry by ferry.</title>
+  <meta name="description" content="Adventure is a route-aware trip planner built for Romblon Province, Philippines. Pick your islands and get an itinerary built around real ferries, terminals and places.">
+  <meta name="theme-color" content="#071B33">
+  <link rel="icon" href="images/web/logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+    // Enable entrance states only when motion is allowed; main.js clears them if GSAP fails to load.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');
+  </script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0..1,0&icon_names=arrow_forward,arrow_upward,close,directions_boat,download,forum,location_on,mail,menu,menu_book,north_east,pause,play_arrow,route&display=block">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="wrap nav-inner">
+      <a href="#home" class="brand" aria-label="Adventure — home">
+        <img src="images/web/logo.webp" alt="" width="34" height="34">
+        Adventure
+      </a>
+      <div class="nav-links">
+        <a href="#adventures">Adventures</a>
+        <a href="#destinations">Destinations</a>
+        <a href="#app">The App</a>
+        <a href="#about">About</a>
+        <a href="press.html">Press</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-right">
+        <a href="https://play.google.com/store/apps/details?id=ph.adventureromblon.app" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">Get the app</a>
+        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span class="ms burger-open" aria-hidden="true">menu</span><span class="ms burger-close" aria-hidden="true">close</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile" inert>
+    <ol>
+      <li><a href="#adventures">Adventures</a></li>
+      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="#app">The App</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="press.html">Press</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+    <div class="mobile-menu-foot">
+      <a href="https://play.google.com/store/apps/details?id=ph.adventureromblon.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Get the app on Google Play
+        <span class="ms arr" style="font-size:16px" aria-hidden="true">arrow_forward</span>
+      </a>
+      <p>adventureromblon@yahoo.com · Tablas, Romblon</p>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero on-dark" id="home">
+    <!-- Background photo carousel: first slide loads with the page, the rest after load (js/main.js) -->
+    <div class="hero-slides" aria-hidden="true">
+      <div class="slide is-active" data-name="Bon Bon Beach" data-loc="Romblon Island">
+        <img src="images/web/bonbon.jpg" alt="" width="2048" height="1152" fetchpriority="high" style="object-position: center 55%">
+      </div>
+      <div class="slide" data-name="Cresta de Gallo" data-loc="San Fernando, Sibuyan">
+        <img data-src="images/web/hero-cresta.webp" alt="" width="1920" height="1440" style="object-position: center 50%">
+      </div>
+      <div class="slide" data-name="Turtle Cove" data-loc="Romblon">
+        <img data-src="images/web/turtle-cove.webp" alt="" width="1000" height="1333" style="object-position: center 45%">
+      </div>
+    </div>
+    <div class="hero-shade" aria-hidden="true"></div>
+
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="hero-eyebrow" data-hero="eyebrow">
+          <span>Adventure</span><i></i><span>Explore</span><i></i><span>Discover</span>
+        </p>
+        <h1 class="hero-title h-xl" aria-label="Go beyond the ordinary.">
+          <span class="ln" aria-hidden="true"><span>Go beyond</span></span>
+          <span class="ln" aria-hidden="true"><span>the <span class="accent">ordinary.</span></span></span>
+        </h1>
+        <p class="hero-desc" data-hero="desc">
+          Island-hop Romblon, ferry by ferry. Pick your islands and Adventure builds the itinerary around the
+          ferries, terminals and places along the way.
+        </p>
+        <div class="hero-ctas" data-hero="cta">
+          <a href="#adventures" class="btn btn-primary">Explore adventures
+            <span class="ms arr" style="font-size:16px" aria-hidden="true">arrow_forward</span>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=ph.adventureromblon.app" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Get the app</a>
+        </div>
+      </div>
+
+      <div class="hero-slider-ui" data-hero="visual">
+        <p class="slide-cap">
+          <span class="slide-num" id="slideNum">01 / 03</span>
+          <strong id="slideName">Bon Bon Beach</strong>
+          <span id="slideLoc">Romblon Island</span>
+        </p>
+        <div class="slide-controls" role="group" aria-label="Background photos">
+          <div class="slide-dots" id="slideDots"></div>
+          <button class="slide-toggle" id="slideToggle" type="button" aria-label="Pause background slideshow" aria-pressed="false">
+            <span class="ms i-pause" style="font-size:12px" aria-hidden="true">pause</span>
+            <span class="ms i-play" style="font-size:12px" aria-hidden="true">play_arrow</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap hero-foot" data-hero="foot">
+      <span class="beta">Available on Android</span>
+      <a href="#intro" class="scroll-cue" aria-label="Scroll to explore">
+        <span>Scroll to explore</span>
+        <span class="track" aria-hidden="true"></span>
+      </a>
+      <span class="coords">Sibuyan Sea · Philippines</span>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== 01 INTRODUCTION ===================== -->
+    <section class="section intro" id="intro" aria-labelledby="intro-title">
+      <div class="wrap">
+        <div class="sec-head" data-reveal><span class="sec-num">01</span><span class="rule"></span><span class="label">The idea</span></div>
+        <h2 class="sr-only" id="intro-title">Why Adventure</h2>
+        <p class="intro-statement" data-words>
+          Romblon is twenty islands scattered across the Sibuyan Sea. Getting between them is
+          <span class="hl">the adventure</span> — and the hard part. So Adventure plans your trip
+          <span class="hl">around the ferries,</span> not despite them.
+        </p>
+
+        <div class="intro-grid" data-stagger>
+          <div class="intro-fact">
+            <span class="n">01</span>
+            <h3>Route-aware</h3>
+            <p>Built around real ferry routes, terminals and schedules — not a generic map with a Romblon tab.</p>
+          </div>
+          <div class="intro-fact">
+            <span class="n">02</span>
+            <h3>Offline-ready</h3>
+            <p>Generate your itinerary online, then open it anywhere — even when the signal drops between islands.</p>
+          </div>
+          <div class="intro-fact">
+            <span class="n">03</span>
+            <h3>Local by design</h3>
+            <p>A personal project made in Romblon, with photos from local photographers across the province.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 02 ADVENTURES ===================== -->
+    <section class="section" id="adventures" aria-labelledby="adv-title">
+      <div class="wrap">
+        <div class="section-top">
+          <div>
+            <div class="sec-head" data-reveal><span class="sec-num">02</span><span class="rule"></span><span class="label">Adventures</span></div>
+            <h2 class="h-lg" id="adv-title">
+              <span class="ln"><span>Find your</span></span>
+              <span class="ln"><span>next <span class="accent">adventure.</span></span></span>
+            </h2>
+          </div>
+          <p class="lead" data-reveal>From a knife-edge summit to sandbars that only appear at low tide. Tap any
+            place to open it on the map.</p>
+        </div>
+
+        <div class="adv-grid" id="advGrid">
+          <!-- Cards are rendered from the ADVENTURES list in js/main.js -->
+        </div>
+        <p class="rail-hint" aria-hidden="true"><i></i>Swipe to explore</p>
+      </div>
+    </section>
+
+    <!-- ===================== 03 FEATURED ===================== -->
+    <section class="section light featured" id="featured" aria-labelledby="feat-title">
+      <div class="wrap feat-grid">
+        <div class="feat-media">
+          <span class="feat-vert" aria-hidden="true">Sibuyan Island · 2,058 m</span>
+          <div class="feat-main" data-reveal="clip">
+            <img src="images/web/guiting.webp" alt="The jagged ridgeline of Mount Guiting-Guiting under a deep blue sky, forest below" width="1106" height="1422" loading="lazy" decoding="async" data-parallax-inner="10">
+          </div>
+        </div>
+
+        <div class="feat-copy">
+          <div class="sec-head" data-reveal><span class="sec-num">03</span><span class="rule"></span><span class="label">Featured experience</span></div>
+          <h2 class="h-lg" id="feat-title">
+            <span class="ln"><span>The wild</span></span>
+            <span class="ln"><span>is <span class="accent">waiting.</span></span></span>
+          </h2>
+          <p class="body" data-reveal>Mount Guiting-Guiting rises straight out of Sibuyan Island — a serrated ridge of
+            granite above old-growth forest. It's one of the hardest climbs in the country, and the view from the
+            top makes every step worth it.</p>
+
+          <dl class="feat-meta" data-stagger>
+            <div><dt>Location</dt><dd>Sibuyan Island</dd></div>
+            <div><dt>Elevation</dt><dd>2,058 m</dd></div>
+            <div><dt>Duration</dt><dd>2–3 days, guided</dd></div>
+            <div><dt>Difficulty</dt><dd>Hard <span class="diff" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></dd></div>
+          </dl>
+
+
+          <a class="btn btn-primary" data-reveal target="_blank" rel="noopener noreferrer"
+            href="https://www.google.com/maps/search/?api=1&amp;query=Mount%20Guiting-Guiting%2C%20Romblon%2C%20Philippines">
+            Discover experience
+            <span class="ms arr" style="font-size:16px" aria-hidden="true">arrow_forward</span>
+            <span class="sr-only">(opens Google Maps in a new tab)</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 04 DESTINATIONS ===================== -->
+    <section class="section" id="destinations" aria-labelledby="dest-title">
+      <div class="wrap">
+        <div class="section-top">
+          <div>
+            <div class="sec-head" data-reveal><span class="sec-num">04</span><span class="rule"></span><span class="label">Destinations</span></div>
+            <h2 class="h-lg" id="dest-title">
+              <span class="ln"><span>Three islands.</span></span>
+              <span class="ln"><span>One <span class="accent">province.</span></span></span>
+            </h2>
+          </div>
+          <p class="lead" data-reveal>Each of Romblon's main islands has its own character — and its own ferry
+            connections. Adventure knows which is which.</p>
+        </div>
+
+        <div class="dest-grid">
+          <article class="dest big" data-reveal>
+            <div class="dest-img" data-parallax="50"><img src="images/web/cresta-sandbar.webp" alt="Cresta de Gallo's long white sandbar stretching into turquoise water, with boats moored along it" width="1100" height="1467" loading="lazy" decoding="async"></div>
+            <div class="dest-top"><span class="n">Sibuyan</span><span class="coord">12.40° N · 122.56° E</span></div>
+            <div class="dest-body">
+              <h3>Sibuyan Island</h3>
+              <p>The wild one. Mount Guiting-Guiting, river-boulder valleys, and Cresta de Gallo just offshore of San Fernando.</p>
+              <div class="tags"><span>Mountains</span><span>Sandbars</span><span>Rivers</span></div>
+            </div>
+          </article>
+
+          <article class="dest" data-reveal>
+            <div class="dest-img" data-parallax="30"><img src="images/web/bon-sandbar.webp" alt="A long white sandbar curving into clear turquoise water below green hills" width="1600" height="900" loading="lazy" decoding="async"></div>
+            <div class="dest-top"><span class="n">Romblon</span><span class="coord">12.58° N · 122.27° E</span></div>
+            <div class="dest-body">
+              <h3>Romblon Island</h3>
+              <p>The marble capital. Fuerza San Andres, Bon Bon Beach and the sandbar you can walk at low tide.</p>
+            </div>
+          </article>
+
+          <article class="dest" data-reveal>
+            <div class="dest-img" data-parallax="30"><img src="images/web/lapus-lapus.webp" alt="Lapus-Lapus Beach in Calatrava, Tablas: white sand and boats between limestone rocks" width="1400" height="797" loading="lazy" decoding="async"></div>
+            <div class="dest-top"><span class="n">Tablas</span><span class="coord">12.40° N · 122.03° E</span></div>
+            <div class="dest-body">
+              <h3>Tablas Island</h3>
+              <p>The largest island — and where most trips begin, through the ports of Odiongan and San Agustin.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track" data-marquee>
+          <span class="fill">Carabao</span><b>·</b><span>Banton</span><b>·</b><span class="fill">Simara</span><b>·</b><span>Alad</span><b>·</b><span class="fill">Cobrador</span><b>·</b><span>Tablas</span><b>·</b><span class="fill">Sibuyan</span><b>·</b><span>Romblon</span><b>·</b>
+        </div>
+      </div>
+      <div class="wrap marquee-cap">
+        <span class="label"><span class="dot"></span>…and the smaller islands in between</span>
+        <a href="#contact" class="ulink orange">Suggest a spot <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- ===================== 05 THE APP ===================== -->
+    <section class="section light" id="app" aria-labelledby="app-title">
+      <div class="wrap">
+        <div class="section-top">
+          <div>
+            <div class="sec-head" data-reveal><span class="sec-num">05</span><span class="rule"></span><span class="label">The app</span></div>
+            <h2 class="h-lg" id="app-title">
+              <span class="ln"><span>Everything</span></span>
+              <span class="ln"><span>between <span class="accent">islands.</span></span></span>
+            </h2>
+          </div>
+          <p class="lead" data-reveal>Three steps, ferries already accounted for. Then everything you need on the
+            water and on land.</p>
+        </div>
+
+        <div class="app-grid">
+          <div class="app-phone">
+            <div class="phone" data-reveal>
+              <img src="images/web/app-home.jpg" alt="Adventure app home screen: a featured beach, quick actions and must-visit places" width="700" height="1415" loading="lazy" decoding="async">
+              <span class="chip c1" data-parallax="-40">
+                <span class="ms" style="font-size:16px" aria-hidden="true">directions_boat</span>
+                Dangay Port <span class="accent">→ Odiongan Port</span>
+              </span>
+              <span class="chip c2" data-parallax="40">Works offline <span class="accent">✓</span></span>
+            </div>
+          </div>
+
+          <div>
+            <div class="steps">
+              <div class="spine" aria-hidden="true"><i></i></div>
+              <div class="step" data-reveal>
+                <span class="n">Step 01</span>
+                <h3>Choose your islands</h3>
+                <p>Pick starting and ending points — one island or several.</p>
+              </div>
+              <div class="step" data-reveal>
+                <span class="n">Step 02</span>
+                <h3>Adventure builds the route</h3>
+                <p>Places, terminals and ferry connections, arranged day by day.</p>
+              </div>
+              <div class="step" data-reveal>
+                <span class="n">Step 03</span>
+                <h3>Travel, mark, remember</h3>
+                <p>Check off places, add photos, and finish with your own journal.</p>
+              </div>
+            </div>
+
+            <div class="features" data-stagger>
+              <div class="feature">
+                <span class="ic"><span class="ms" style="font-size:20px" aria-hidden="true">route</span></span>
+                <div><span class="tag">Planning</span><h3>Route-aware planning</h3><p>Pick your islands and get an itinerary built around real ferry routes, terminals and places.</p></div>
+              </div>
+              <div class="feature">
+                <span class="ic"><span class="ms" style="font-size:20px" aria-hidden="true">directions_boat</span></span>
+                <div><span class="tag">Ferries</span><h3>Schedules &amp; routes</h3><p>Browse available ferries, compare schedules, and find the best connection.</p></div>
+              </div>
+              <div class="feature">
+                <span class="ic"><span class="ms" style="font-size:20px" aria-hidden="true">forum</span></span>
+                <div><span class="tag">Isla</span><h3>Isla, trip assistant</h3><p>Ask Isla about any municipality, fiesta date, or what to do anywhere in Romblon.</p></div>
+              </div>
+              <div class="feature">
+                <span class="ic"><span class="ms" style="font-size:20px" aria-hidden="true">download</span></span>
+                <div><span class="tag">Offline</span><h3>View itineraries offline</h3><p>Generate your itinerary while online, then open it later — even with no signal.</p></div>
+              </div>
+              <div class="feature">
+                <span class="ic"><span class="ms" style="font-size:20px" aria-hidden="true">menu_book</span></span>
+                <div><span class="tag">Journal</span><h3>Travel journal</h3><p>Mark every stop as done, upload your memories, and create your own journal of the trip.</p></div>
+              </div>
+              <div class="feature">
+                <span class="ic"><span class="ms" style="font-size:20px" aria-hidden="true">location_on</span></span>
+                <div><span class="tag">Map</span><h3>Travel map journal</h3><p>Every place you mark drops a pin on your personal map.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screens">
+          <figure class="screen" data-parallax="-30">
+            <div class="shot" data-reveal="clip"><img src="images/web/app-route-schedule.jpg" alt="Route schedule: ferry routes, sailing days and the ferry calendar" width="600" height="1213" loading="lazy" decoding="async"></div>
+            <figcaption><span>01</span>Route schedule</figcaption>
+          </figure>
+          <figure class="screen" data-parallax="30">
+            <div class="shot" data-reveal="clip"><img src="images/web/app-isla.jpg" alt="Isla chat, the in-app trip assistant" width="600" height="1213" loading="lazy" decoding="async"></div>
+            <figcaption><span>02</span>Isla chat</figcaption>
+          </figure>
+          <figure class="screen" data-parallax="-30">
+            <div class="shot" data-reveal="clip"><img src="images/web/app-itinerary.jpg" alt="A day-by-day trip itinerary" width="600" height="1213" loading="lazy" decoding="async"></div>
+            <figcaption><span>03</span>Itinerary</figcaption>
+          </figure>
+          <figure class="screen" data-parallax="30">
+            <div class="shot" data-reveal="clip"><img src="images/web/app-travel-footprints.jpg" alt="Travel footprints map with visited places and trip progress" width="600" height="1213" loading="lazy" decoding="async"></div>
+            <figcaption><span>04</span>Travel footprints</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 06 STATS ===================== -->
+    <section class="stats on-dark" aria-labelledby="stats-title">
+      <div class="stats-topo" aria-hidden="true" data-parallax="-80"></div>
+      <div class="stats-ghost" aria-hidden="true" data-drift="-18">Romblon</div>
+      <div class="wrap">
+        <div class="stats-head">
+          <div>
+            <div class="sec-head" data-reveal><span class="sec-num">06</span><span class="rule"></span><span class="label">By the numbers</span></div>
+            <h2 class="h-md" id="stats-title">
+              <span class="ln"><span>A province built</span></span>
+              <span class="ln"><span>for <span class="accent">exploring.</span></span></span>
+            </h2>
+          </div>
+          <p class="lead" data-reveal>Small on the map, big on the water. This is what Adventure is built to navigate.</p>
+        </div>
+
+        <div class="stats-grid" data-stagger>
+          <div class="stat">
+            <div class="num"><span data-count="20">20</span></div>
+            <div class="lbl">Islands</div>
+            <div class="sub">Scattered across the Sibuyan Sea</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span data-count="17">17</span></div>
+            <div class="lbl">Municipalities</div>
+            <div class="sub">Each with its own fiesta calendar</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span data-count="2058" data-format="comma">2,058</span><sup>m</sup></div>
+            <div class="lbl">Highest peak</div>
+            <div class="sub">Mount Guiting-Guiting, Sibuyan</div>
+          </div>
+          <div class="stat">
+            <div class="num"><span data-count="3">3</span></div>
+            <div class="lbl">Main islands</div>
+            <div class="sub">Tablas, Romblon and Sibuyan</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 07 STORY / ABOUT ===================== -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap story-grid">
+        <div class="story-copy">
+          <div class="sec-head" data-reveal><span class="sec-num">07</span><span class="rule"></span><span class="label">The story</span></div>
+          <h2 class="h-lg" id="about-title">
+            <span class="ln"><span>I don't just</span></span>
+            <span class="ln"><span>visit Romblon.</span></span>
+            <span class="ln"><span>I keep <span class="accent">coming back.</span></span></span>
+          </h2>
+          <p class="body" data-reveal>Adventure is a personal project, not a company. It started as a passion for the
+            province — built specifically for its ferries, terminals and islands.</p>
+          <p class="body" data-reveal>Designed and built by Bryan Ronnie Briones in Tablas, with photos from local
+            photographers who know these islands best.</p>
+
+          <ol class="principles" data-stagger>
+            <li><span class="n">01</span><div><h3>Independently built</h3><p>Designed and developed from the ground up.</p></div></li>
+            <li><span class="n">02</span><div><h3>Romblon-first</h3><p>Built around this province specifically.</p></div></li>
+            <li><span class="n">03</span><div><h3>Personal project</h3><p>Built and looked after by one person.</p></div></li>
+          </ol>
+
+          <div class="story-actions" data-reveal>
+            <a href="press.html" class="btn btn-ghost">Read the full story</a>
+            <a href="press.html" class="ulink orange">Press kit <span class="arr" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 08 CONTACT ===================== -->
+    <section class="section light" id="contact" aria-labelledby="contact-title">
+      <div class="wrap contact-grid">
+        <div>
+          <div class="sec-head" data-reveal><span class="sec-num">08</span><span class="rule"></span><span class="label">Contact</span></div>
+          <h2 class="h-lg" id="contact-title">
+            <span class="ln"><span>Let's <span class="accent">talk.</span></span></span>
+          </h2>
+          <p class="lead" data-reveal style="margin-top: 24px;">Whether you have a question about the app, a spot to suggest, or photos of
+            Romblon to share — this reaches Bryan directly.</p>
+
+          <dl class="contact-list" data-stagger>
+            <div><dt>Email</dt><dd><a href="mailto:adventureromblon@yahoo.com">adventureromblon@yahoo.com</a></dd></div>
+            <div><dt>Location</dt><dd>Tablas, Romblon</dd></div>
+            <div><dt>Typical reply</dt><dd>A few days</dd></div>
+            <div><dt>Get the app</dt><dd><a href="https://play.google.com/store/apps/details?id=ph.adventureromblon.app" target="_blank" rel="noopener noreferrer">Google Play</a></dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FINAL CTA ===================== -->
+    <section class="cta on-dark" aria-labelledby="cta-title">
+      <div class="cta-topo" aria-hidden="true" data-parallax="-90"></div>
+      <div class="wrap">
+        <h2 class="h-xl" id="cta-title">
+          <span class="ln"><span>Your next</span></span>
+          <span class="ln"><span>adventure</span></span>
+          <span class="ln"><span>starts <span class="accent">here.</span></span></span>
+        </h2>
+        <p class="lead" data-reveal>Ready to go beyond the ordinary? Get Adventure free on Google Play and plan your
+          island-hopping trip around real ferry routes.</p>
+        <div class="cta-actions" data-reveal>
+          <a href="https://play.google.com/store/apps/details?id=ph.adventureromblon.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Get the app
+            <span class="ms arr" style="font-size:16px" aria-hidden="true">arrow_forward</span>
+          </a>
+          <a href="#adventures" class="btn btn-ghost">See adventures</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#home" class="brand"><img src="images/web/logo.webp" alt="" width="34" height="34" loading="lazy">Adventure</a>
+          <p>A travel companion built specifically for Romblon Province — island by island, ferry by ferry.</p>
+          <div class="socials">
+            <a href="mailto:adventureromblon@yahoo.com" aria-label="Email Adventure">
+              <span class="ms" style="font-size:16px" aria-hidden="true">mail</span>
+            </a>
+          </div>
+        </div>
+        <nav aria-labelledby="f-explore">
+          <h2 id="f-explore">Explore</h2>
+          <ul>
+            <li><a href="#adventures">Adventures</a></li>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#app">The app</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-dest">
+          <h2 id="f-dest">Destinations</h2>
+          <ul>
+            <li><a href="#destinations">Sibuyan Island</a></li>
+            <li><a href="#destinations">Romblon Island</a></li>
+            <li><a href="#destinations">Tablas Island</a></li>
+            <li><a href="#contact">Suggest a spot</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-company">
+          <h2 id="f-company">Project</h2>
+          <ul>
+            <li><a href="press.html">Press kit</a></li>
+            <li><a href="https://play.google.com/store/apps/details?id=ph.adventureromblon.app" target="_blank" rel="noopener noreferrer">Get the app</a></li>
+            <li><a href="#contact">Support</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Adventure. Built in Romblon.</span>
+        <span>Founder: Bryan Ronnie Briones</span>
+        <span class="footer-legal"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+        <a href="#home" class="to-top">Back to top
+          <span class="ms" style="font-size:14px" aria-hidden="true">arrow_upward</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-word" aria-hidden="true">Adventure</div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+
+</html>

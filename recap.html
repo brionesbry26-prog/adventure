@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Trip recap — Adventure</title>
+  <meta name="description" content="A Romblon trip recap shared from the Adventure app.">
+  <meta name="theme-color" content="#071B33">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="images/web/logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!--
+    A trip recap shared from the app (Trip recap → Share on the web).
+    The app links here as recap.html?id=<recapId>; /recap/<recapId> works
+    too where the host rewrites it to this page. The recap is read from
+    Firestore public_recaps/{id} (public read in firestore.rules) through
+    the REST API, so this page needs no Firebase setup.
+    Self-contained styles: the page works in any of the website folders.
+  -->
+  <style>
+    :root {
+      --navy: #071B33;
+      --navy-2: #0D2745;
+      --orange: #FF6A00;
+      --orange-ink: #B84A00;
+      --ink: #071B33;
+      --ink-2: rgba(7, 27, 51, .72);
+      --ink-3: rgba(7, 27, 51, .52);
+      --line: rgba(7, 27, 51, .10);
+      --surface: #F7F8FA;
+      --card: #FFFFFF;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: Montserrat, system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--orange-ink); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+    header.top { background: var(--navy); color: #fff; padding: 20px 0 40px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 800; letter-spacing: .02em; }
+    .brand img { width: 30px; height: 30px; }
+    .eyebrow { margin: 32px 0 8px; color: var(--orange); font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(1.8rem, 6vw, 2.8rem); line-height: 1.1; font-weight: 800; overflow-wrap: anywhere; }
+    .meta { margin: 12px 0 0; color: rgba(255, 255, 255, .72); font-size: .95rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-top: 24px; }
+    .stat { background: var(--navy-2); border-radius: 12px; padding: 12px 14px; }
+    .stat b { display: block; font-size: 1.4rem; font-weight: 800; }
+    .stat span { color: rgba(255, 255, 255, .7); font-size: .8rem; }
+    main { padding: 28px 0 56px; }
+    .islands { color: var(--ink-2); margin: 0 0 24px; font-size: .95rem; }
+    .day { margin-bottom: 28px; }
+    .day h2 { font-size: 1rem; font-weight: 800; margin: 0 0 12px; display: flex; align-items: center; gap: 10px; }
+    .day h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+    .stop { background: var(--card); border-radius: 14px; overflow: hidden; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(7, 27, 51, .06); }
+    .stop .cover { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #e8ecf1; }
+    .stop .body { padding: 14px 16px 16px; }
+    .stop h3 { margin: 0; font-size: 1.05rem; font-weight: 700; overflow-wrap: anywhere; }
+    .stop .where { margin: 4px 0 0; color: var(--ink-3); font-size: .85rem; }
+    .stop .where a { margin-left: 6px; font-weight: 600; }
+    .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+    .photos a { display: block; border-radius: 8px; overflow: hidden; aspect-ratio: 1; background: #e8ecf1; }
+    .photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .state { text-align: center; padding: 64px 16px; color: var(--ink-2); }
+    .state h2 { color: var(--ink); margin: 0 0 8px; font-size: 1.3rem; }
+    .cta { background: var(--card); border-radius: 16px; padding: 20px; text-align: center; margin-top: 32px; }
+    .cta p { margin: 0 0 12px; color: var(--ink-2); }
+    .btn { display: inline-block; background: #E35A00; color: #FFFFFF; font-weight: 800; text-decoration: none; padding: 12px 20px; border-radius: 999px; transition: transform .2s ease; }
+    .btn:hover { transform: translateY(-1px); }
+    footer { text-align: center; color: var(--ink-3); font-size: .85rem; padding: 0 16px 32px; }
+    footer a { color: inherit; }
+    @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+  </style>
+</head>
+
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="index.html"><img src="images/web/logo.webp" alt="" width="30" height="30">Adventure</a>
+      <div id="head"></div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main" aria-live="polite">
+    <div class="state" id="state"><p>Loading the trip…</p></div>
+  </main>
+
+  <footer>
+    Shared from the Adventure app · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+  </footer>
+
+  <script>
+    (function () {
+      var PROJECT = 'romblon-5782d';
+      var head = document.getElementById('head');
+      var main = document.getElementById('main');
+
+      function el(tag, cls, text) {
+        var n = document.createElement(tag);
+        if (cls) n.className = cls;
+        if (text != null) n.textContent = text; // never innerHTML: recaps are user content
+        return n;
+      }
+
+      // Only https images (Firebase Storage download links and the like).
+      function safeUrl(u) {
+        return typeof u === 'string' && /^https:\/\//i.test(u) ? u : null;
+      }
+
+      // Firestore REST values → plain JS.
+      function decode(v) {
+        if (!v || typeof v !== 'object') return null;
+        if ('stringValue' in v) return v.stringValue;
+        if ('integerValue' in v) return Number(v.integerValue);
+        if ('doubleValue' in v) return v.doubleValue;
+        if ('booleanValue' in v) return v.booleanValue;
+        if ('timestampValue' in v) return v.timestampValue;
+        if ('nullValue' in v) return null;
+        if ('arrayValue' in v) return (v.arrayValue.values || []).map(decode);
+        if ('mapValue' in v) return fields(v.mapValue.fields || {});
+        return null;
+      }
+      function fields(f) {
+        var o = {};
+        Object.keys(f).forEach(function (k) { o[k] = decode(f[k]); });
+        return o;
+      }
+
+      function recapId() {
+        var q = new URLSearchParams(location.search).get('id');
+        if (q) return q;
+        var m = location.pathname.match(/\/recap\/([A-Za-z0-9_-]+)/);
+        return m ? m[1] : null;
+      }
+
+      // Calendar days were saved as ISO strings; show them as dates only.
+      function day(iso) {
+        var m = typeof iso === 'string' && iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
+        if (!m) return null;
+        return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]))
+          .toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+      }
+
+      function showState(title, text) {
+        main.textContent = '';
+        var s = el('div', 'state');
+        s.appendChild(el('h2', null, title));
+        s.appendChild(el('p', null, text));
+        main.appendChild(s);
+        main.appendChild(cta());
+      }
+
+      function cta() {
+        var c = el('div', 'cta');
+        c.appendChild(el('p', null, 'Plan your own Romblon trip — islands, ferries and places, day by day.'));
+        var a = el('a', 'btn', 'Get Adventure');
+        a.href = 'https://play.google.com/store/apps/details?id=ph.adventureromblon.app'; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        c.appendChild(a);
+        return c;
+      }
+
+      function stat(n, label) {
+        var s = el('div', 'stat');
+        s.appendChild(el('b', null, String(n)));
+        s.appendChild(el('span', null, label));
+        return s;
+      }
+
+      function render(r) {
+        var stats = r.stats || {};
+        var title = (r.title || 'A Romblon trip').slice(0, 200);
+        document.title = title + ' — Adventure';
+
+        head.textContent = '';
+        head.appendChild(el('p', 'eyebrow', 'Trip recap'));
+        head.appendChild(el('h1', null, title));
+        var from = day(r.start), to = day(r.end);
+        var meta = 'by ' + (r.author || 'A traveler');
+        if (from) meta += ' · ' + from + (to && to !== from ? ' – ' + to : '');
+        head.appendChild(el('p', 'meta', meta));
+        var grid = el('div', 'stats');
+        if (stats.days) grid.appendChild(stat(stats.days, stats.days === 1 ? 'day' : 'days'));
+        grid.appendChild(stat(stats.places || 0, stats.places === 1 ? 'place' : 'places'));
+        if (stats.km) grid.appendChild(stat(stats.km, 'km travelled'));
+        if (stats.photos) grid.appendChild(stat(stats.photos, stats.photos === 1 ? 'photo' : 'photos'));
+        head.appendChild(grid);
+
+        main.textContent = '';
+        var islands = Array.isArray(stats.islands) ? stats.islands.filter(Boolean) : [];
+        if (islands.length) main.appendChild(el('p', 'islands', 'Islands: ' + islands.join(', ')));
+
+        var stops = Array.isArray(r.stops) ? r.stops : [];
+        if (!stops.length) {
+          main.appendChild(el('p', 'islands', 'No stops were marked visited on this trip yet.'));
+        }
+        var byDay = {};
+        stops.forEach(function (s) {
+          var d = Number(s && s.day) || 1;
+          (byDay[d] = byDay[d] || []).push(s);
+        });
+        Object.keys(byDay).map(Number).sort(function (a, b) { return a - b; }).forEach(function (d) {
+          var sec = el('section', 'day');
+          sec.appendChild(el('h2', null, 'Day ' + d));
+          byDay[d].forEach(function (s) { sec.appendChild(stopCard(s)); });
+          main.appendChild(sec);
+        });
+        main.appendChild(cta());
+      }
+
+      function stopCard(s) {
+        var card = el('article', 'stop');
+        var cover = safeUrl(s.cover);
+        if (cover) {
+          var img = el('img', 'cover');
+          img.src = cover; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
+          card.appendChild(img);
+        }
+        var body = el('div', 'body');
+        body.appendChild(el('h3', null, s.name || 'A stop'));
+        var where = [s.municipality, s.island].filter(Boolean).join(', ');
+        var w = el('p', 'where', where);
+        if (typeof s.lat === 'number' && typeof s.lng === 'number') {
+          var map = el('a', null, 'Map');
+          map.href = 'https://www.openstreetmap.org/?mlat=' + s.lat + '&mlon=' + s.lng + '#map=15/' + s.lat + '/' + s.lng;
+          map.target = '_blank'; map.rel = 'noopener noreferrer';
+          w.appendChild(map);
+        }
+        if (where || map) body.appendChild(w);
+        var photos = (Array.isArray(s.photos) ? s.photos : []).map(safeUrl).filter(Boolean);
+        if (photos.length) {
+          var g = el('div', 'photos');
+          photos.slice(0, 6).forEach(function (u) {
+            var a = el('a'); a.href = u; a.target = '_blank'; a.rel = 'noopener noreferrer';
+            a.setAttribute('aria-label', 'Open photo');
+            var i = el('img'); i.src = u; i.alt = ''; i.loading = 'lazy'; i.decoding = 'async';
+            a.appendChild(i); g.appendChild(a);
+          });
+          body.appendChild(g);
+        }
+        card.appendChild(body);
+        return card;
+      }
+
+      var id = recapId();
+      if (!id || !/^[A-Za-z0-9_-]{1,64}$/.test(id)) {
+        showState('No trip here', 'This link is missing its trip. Ask for the link again.');
+        return;
+      }
+      fetch('https://firestore.googleapis.com/v1/projects/' + PROJECT +
+        '/databases/(default)/documents/public_recaps/' + encodeURIComponent(id))
+        .then(function (res) {
+          if (res.status === 404) throw { gone: true };
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function (doc) { render(fields(doc.fields || {})); })
+        .catch(function (e) {
+          if (e && e.gone) {
+            showState('This recap isn’t shared anymore', 'The traveler may have stopped sharing it.');
+          } else {
+            showState('Couldn’t load the trip', 'Check your connection and try again.');
+          }
+        });
+
+      // For checking the layout with sample data in a browser console.
+      window.__adventureRecap = { render: render, fields: fields };
+    })();
+  </script>
+</body>
+
+</html>
