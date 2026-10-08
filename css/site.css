@@ -158,6 +158,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .btn-sm { min-height: 42px; padding: 0 18px; font-size: .7rem; }
 
+/* Not-yet-released app: looks like a button, does nothing */
+.btn.is-soon { cursor: default; pointer-events: none; }
+
 /* animated underline link */
 .ulink {
   display: inline-flex; align-items: center; gap: 8px;
@@ -697,7 +700,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .socials a:hover { background: var(--orange-btn); border-color: var(--orange-btn); color: var(--white); }
 .footer h2 { font-size: .68rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--orange); margin-bottom: 18px; }
 .footer li + li { margin-top: 10px; }
-.footer li a, .footer address { font-style: normal; font-size: .92rem; font-weight: 500; color: var(--on-dark-2); transition: color .3s; }
+.footer li a, .footer li .soon, .footer address { font-style: normal; font-size: .92rem; font-weight: 500; color: var(--on-dark-2); transition: color .3s; }
 .footer li a { background: linear-gradient(var(--orange), var(--orange)) 0 100% / 0 1px no-repeat; padding-bottom: 2px; transition: color .3s, background-size .45s var(--ease); }
 .footer li a:hover { color: var(--white); background-size: 100% 1px; }
 .footer address { line-height: 1.8; overflow-wrap: anywhere; }
