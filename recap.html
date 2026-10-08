@@ -73,6 +73,7 @@
     .cta p { margin: 0 0 12px; color: var(--ink-2); }
     .btn { display: inline-block; background: #E35A00; color: #FFFFFF; font-weight: 800; text-decoration: none; padding: 12px 20px; border-radius: 999px; transition: transform .2s ease; }
     .btn:hover { transform: translateY(-1px); }
+    .btn.is-soon { cursor: default; pointer-events: none; }
     footer { text-align: center; color: var(--ink-3); font-size: .85rem; padding: 0 16px 32px; }
     footer a { color: inherit; }
     @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
@@ -159,9 +160,7 @@
       function cta() {
         var c = el('div', 'cta');
         c.appendChild(el('p', null, 'Plan your own Romblon trip — islands, ferries and places, day by day.'));
-        var a = el('a', 'btn', 'Get Adventure');
-        a.href = 'https://play.google.com/store/apps/details?id=ph.adventureromblon.app'; a.target = '_blank'; a.rel = 'noopener noreferrer';
-        c.appendChild(a);
+        c.appendChild(el('span', 'btn is-soon', 'App coming soon'));
         return c;
       }
 
