@@ -86,6 +86,13 @@
       ['Romblon Provincial Tourism and Cultural Affairs Office', 'https://www.facebook.com/profile.php?id=61590316604668'],
       ['Star Palace Restaurant & Cafe in Odiongan, Tablas Island, Romblon', 'https://www.facebook.com/starpalacerestaurant'],
       ['Wander Twins', 'https://www.facebook.com/wandertwinsofficial'],
+      ['Footprints Beach Resort', 'https://www.facebook.com/footprintsbeachresort'],
+      ['FH EL', 'https://www.facebook.com/felina.rufino.menes'],
+      ['BG Lounge Bar & Day Club', 'https://www.facebook.com/profile.php?id=61573904368508'],
+      ['BIG 1 Restaurant', 'https://www.facebook.com/BIG1RestaurantOfficial'],
+      ['Romblon Explorer', 'https://www.facebook.com/Missroseromblon'],
+      ['Fernz Baul', 'https://www.facebook.com/fernandantoinebaul'],
+      ["D'Rose Taverna", 'https://www.facebook.com/d.rose.taverna'],
     ];
     const esc = s => s.replace(/&/g, '&amp;');
     creditsGrid.innerHTML = credits.map(([name, url]) => `
