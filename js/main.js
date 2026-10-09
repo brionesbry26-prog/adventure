@@ -87,11 +87,11 @@
       ['Star Palace Restaurant & Cafe in Odiongan, Tablas Island, Romblon', 'https://www.facebook.com/starpalacerestaurant'],
       ['Wander Twins', 'https://www.facebook.com/wandertwinsofficial'],
       ['Footprints Beach Resort', 'https://www.facebook.com/footprintsbeachresort'],
-      ['Felina Rufino Menes', 'https://www.facebook.com/felina.rufino.menes'],
+      ['FH EL', 'https://www.facebook.com/felina.rufino.menes'],
       ['BG Lounge Bar & Day Club', 'https://www.facebook.com/profile.php?id=61573904368508'],
       ['BIG 1 Restaurant', 'https://www.facebook.com/BIG1RestaurantOfficial'],
-      ['Miss Rose Romblon', 'https://www.facebook.com/Missroseromblon'],
-      ['Fernand Antoine Baul', 'https://www.facebook.com/fernandantoinebaul'],
+      ['Romblon Explorer', 'https://www.facebook.com/Missroseromblon'],
+      ['Fernz Baul', 'https://www.facebook.com/fernandantoinebaul'],
       ["D'Rose Taverna", 'https://www.facebook.com/d.rose.taverna'],
     ];
     const esc = s => s.replace(/&/g, '&amp;');
