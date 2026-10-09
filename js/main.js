@@ -75,7 +75,6 @@
   if (creditsGrid) {
     const credits = [
       ['Tablas Island and Beyond', 'https://www.facebook.com/BeautifulTablasIsland'],
-      ['Romblon Island Explorer', 'https://www.facebook.com/profile.php?id=100063880876770'],
       ['Just Lens', 'https://www.facebook.com/profile.php?id=100076982260081'],
       ['Rochtan in Romblon', 'https://www.facebook.com/profile.php?id=61576414104865'],
       ['BeyondLens', 'https://www.facebook.com/BeyondLensV'],
