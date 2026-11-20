@@ -9,4 +9,3 @@ package.json
 pitch/
 test/
 .gitignore
-vercel.json
