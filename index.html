@@ -7,6 +7,11 @@
   <title>Adventure — Island-hop Romblon, ferry by ferry.</title>
   <meta name="description" content="Adventure is a route-aware trip planner built for Romblon Province, Philippines. Pick your islands and get an itinerary built around real ferries, terminals and places.">
   <meta name="theme-color" content="#071B33">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Adventure">
+  <meta property="og:title" content="Adventure — Island-hop Romblon, ferry by ferry.">
+  <meta property="og:description" content="Romblon's beaches, ferries, island hopping and fiestas in one place.">
+  <meta property="og:image" content="https://adventureph.vercel.app/images/web/bonbon.jpg">
   <link rel="icon" href="images/web/logo.webp" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +20,9 @@
     // Enable entrance states only when motion is allowed; main.js clears them if GSAP fails to load.
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');
   </script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0..1,0&icon_names=arrow_forward,arrow_upward,close,directions_boat,download,forum,location_on,mail,menu,menu_book,north_east,pause,play_arrow,route&display=block">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,0..1,0&icon_names=arrow_forward,arrow_upward,beach_access,call,close,directions_boat,download,event,forum,location_city,location_on,mail,menu,menu_book,north_east,pause,play_arrow,route,sailing,shopping_bag&display=block">
   <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/guide.css">
 </head>
 
 <body>
@@ -31,15 +37,16 @@
         Adventure
       </a>
       <div class="nav-links">
-        <a href="#adventures">Adventures</a>
-        <a href="#destinations">Destinations</a>
+        <a href="explore.html">Explore</a>
+        <a href="towns.html">Towns</a>
+        <a href="routes.html">Ferries &amp; routes</a>
+        <a href="island-hopping.html">Island hopping</a>
+        <a href="pasalubong.html">Pasalubong</a>
+        <a href="events.html">Events</a>
         <a href="#app">The App</a>
-        <a href="#about">About</a>
-        <a href="press.html">Press</a>
-        <a href="#contact">Contact</a>
       </div>
       <div class="nav-right">
-        <span class="btn btn-ghost btn-sm is-soon" aria-disabled="true">Coming soon to Android</span>
+        <a href="#get-app" class="btn btn-ghost btn-sm">Get the app</a>
         <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
           <span class="ms burger-open" aria-hidden="true">menu</span><span class="ms burger-close" aria-hidden="true">close</span>
         </button>
@@ -49,15 +56,20 @@
 
   <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile" inert>
     <ol>
-      <li><a href="#adventures">Adventures</a></li>
-      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="towns.html">Towns</a></li>
+      <li><a href="routes.html">Ferries &amp; routes</a></li>
+      <li><a href="island-hopping.html">Island hopping</a></li>
+      <li><a href="pasalubong.html">Pasalubong</a></li>
+      <li><a href="events.html">Events</a></li>
       <li><a href="#app">The App</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="press.html">Press</a></li>
       <li><a href="#contact">Contact</a></li>
     </ol>
     <div class="mobile-menu-foot">
-      <span class="btn btn-primary is-soon" aria-disabled="true">Coming soon to Android</span>
+      <a href="#get-app" class="btn btn-primary">Get the app · coming soon
+        <span class="ms arr" style="font-size:16px" aria-hidden="true">arrow_forward</span>
+      </a>
       <p>adventureromblon@yahoo.com · Tablas, Romblon</p>
     </div>
   </nav>
@@ -95,7 +107,7 @@
           <a href="#adventures" class="btn btn-primary">Explore adventures
             <span class="ms arr" style="font-size:16px" aria-hidden="true">arrow_forward</span>
           </a>
-          <span class="btn btn-ghost is-soon" aria-disabled="true">Coming soon to Android</span>
+          <a href="#get-app" class="btn btn-ghost">Get the app</a>
         </div>
       </div>
 
@@ -116,7 +128,7 @@
     </div>
 
     <div class="wrap hero-foot" data-hero="foot">
-      <span class="beta"><span>Coming soon to Android · <span class="keep-case">iOS</span> later</span></span>
+      <span class="beta">Available on Android</span>
       <a href="#intro" class="scroll-cue" aria-label="Scroll to explore">
         <span>Scroll to explore</span>
         <span class="track" aria-hidden="true"></span>
@@ -154,6 +166,62 @@
             <h3>Local by design</h3>
             <p>A personal project made in Romblon, with photos from local photographers across the province.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EXPLORE ROMBLON (shortcuts to the guide) ===================== -->
+    <section class="section" id="explore" aria-labelledby="explore-title">
+      <div class="wrap">
+        <div class="sec-head" data-reveal><span class="rule"></span><span class="label">Explore Romblon</span></div>
+        <h2 class="h-lg" id="explore-title">
+          <span class="ln"><span>Every place,</span></span>
+          <span class="ln"><span>ferry and <span class="accent">fiesta.</span></span></span>
+        </h2>
+        <p class="lead" data-reveal style="margin-top: 20px; max-width: 640px;">See Romblon's beaches, falls, food and places to stay, check
+          ferry times and live delays, and find the next town fiesta, right here on the website.</p>
+        <div class="h-explore-tiles">
+          <a class="h-tile" href="explore.html">
+            <span class="ms" aria-hidden="true">beach_access</span>
+            <span class="h-tile-title">All places</span>
+            <span class="h-tile-sub">Tourist spots, food, resorts and shops across the province.</span>
+            <span class="h-tile-n" id="hx-places">Browse places</span>
+          </a>
+          <a class="h-tile" href="towns.html">
+            <span class="ms" aria-hidden="true">location_city</span>
+            <span class="h-tile-title">Towns</span>
+            <span class="h-tile-sub">17 towns on 7 islands, each with its spots, ferries and hotlines.</span>
+            <span class="h-tile-n">17 towns</span>
+          </a>
+          <a class="h-tile" href="routes.html">
+            <span class="ms" aria-hidden="true">directions_boat</span>
+            <span class="h-tile-title">Ferries &amp; routes</span>
+            <span class="h-tile-sub">Sailings between the islands, live delays, bankas and tricycle fares.</span>
+            <span class="h-tile-n" id="hx-routes">See routes</span>
+          </a>
+          <a class="h-tile" href="island-hopping.html">
+            <span class="ms" aria-hidden="true">sailing</span>
+            <span class="h-tile-title">Island hopping</span>
+            <span class="h-tile-sub">Banka tours to sandbars, coves and islands, with prices and who to call.</span>
+            <span class="h-tile-n" id="hx-tours">See tours</span>
+          </a>
+          <a class="h-tile" href="pasalubong.html">
+            <span class="ms" aria-hidden="true">shopping_bag</span>
+            <span class="h-tile-title">Pasalubong</span>
+            <span class="h-tile-sub">Mazapan, marble crafts and weaves from local makers.</span>
+            <span class="h-tile-n">Local makers</span>
+          </a>
+          <a class="h-tile" href="events.html">
+            <span class="ms" aria-hidden="true">event</span>
+            <span class="h-tile-title">Events</span>
+            <span class="h-tile-sub">Town fiestas and celebrations, month by month.</span>
+            <span class="h-tile-n">Fiesta calendar</span>
+          </a>
+        </div>
+        <div class="h-explore-places" id="hx-must" hidden></div>
+        <div class="h-explore-more">
+          <a href="explore.html" class="btn">Explore all places <span class="ms arr" style="font-size:16px" aria-hidden="true">arrow_forward</span></a>
+          <a href="town.html?name=San%20Agustin" class="btn btn-ghost">Start with San Agustin</a>
         </div>
       </div>
     </section>
@@ -457,14 +525,14 @@
             <div><dt>Email</dt><dd><a href="mailto:adventureromblon@yahoo.com">adventureromblon@yahoo.com</a></dd></div>
             <div><dt>Location</dt><dd>Tablas, Romblon</dd></div>
             <div><dt>Typical reply</dt><dd>A few days</dd></div>
-            <div><dt>The app</dt><dd>Coming soon to Android · iOS later</dd></div>
+            <div><dt>Get the app</dt><dd>Coming soon to Google Play · <a href="mailto:adventureromblon@yahoo.com?subject=Early%20access%20to%20the%20Adventure%20app">ask for early access</a></dd></div>
           </dl>
         </div>
       </div>
     </section>
 
     <!-- ===================== FINAL CTA ===================== -->
-    <section class="cta on-dark" aria-labelledby="cta-title">
+    <section class="cta on-dark" id="get-app" aria-labelledby="cta-title">
       <div class="cta-topo" aria-hidden="true" data-parallax="-90"></div>
       <div class="wrap">
         <h2 class="h-xl" id="cta-title">
@@ -472,11 +540,15 @@
           <span class="ln"><span>adventure</span></span>
           <span class="ln"><span>starts <span class="accent">here.</span></span></span>
         </h2>
-        <p class="lead" data-reveal>Ready to go beyond the ordinary? The Adventure app is coming soon to Android, with iOS to follow. Plan your
-          island-hopping trip around real ferry routes.</p>
+        <p class="soon-badge" data-reveal>Coming soon to Google Play</p>
+        <p class="lead" data-reveal>The website shows Romblon's places, ferries and fiestas. The app adds the full
+          features: day-by-day trip plans around real ferry times, Isla your travel assistant, offline maps, budget and
+          expenses, your bucket list, trip memories and live ferry alerts. Free on Android.</p>
         <div class="cta-actions" data-reveal>
-          <span class="btn btn-primary is-soon" aria-disabled="true">Coming soon to Android</span>
-          <a href="#adventures" class="btn btn-ghost">See adventures</a>
+          <a href="mailto:adventureromblon@yahoo.com?subject=Early%20access%20to%20the%20Adventure%20app" class="btn btn-primary">Ask for early access
+            <span class="ms arr" style="font-size:16px" aria-hidden="true">arrow_forward</span>
+          </a>
+          <a href="#app" class="btn btn-ghost">What the app does</a>
         </div>
       </div>
     </section>
@@ -498,18 +570,20 @@
         <nav aria-labelledby="f-explore">
           <h2 id="f-explore">Explore</h2>
           <ul>
-            <li><a href="#adventures">Adventures</a></li>
-            <li><a href="#destinations">Destinations</a></li>
-            <li><a href="#app">The app</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="explore.html">All places</a></li>
+            <li><a href="towns.html">Towns</a></li>
+            <li><a href="routes.html">Ferries &amp; routes</a></li>
+            <li><a href="island-hopping.html">Island hopping</a></li>
+            <li><a href="pasalubong.html">Pasalubong</a></li>
+            <li><a href="events.html">Events</a></li>
           </ul>
         </nav>
         <nav aria-labelledby="f-dest">
           <h2 id="f-dest">Destinations</h2>
           <ul>
-            <li><a href="#destinations">Sibuyan Island</a></li>
-            <li><a href="#destinations">Romblon Island</a></li>
-            <li><a href="#destinations">Tablas Island</a></li>
+            <li><a href="towns.html">Sibuyan Island</a></li>
+            <li><a href="town.html?name=Romblon">Romblon Island</a></li>
+            <li><a href="towns.html">Tablas Island</a></li>
             <li><a href="#contact">Suggest a spot</a></li>
           </ul>
         </nav>
@@ -517,7 +591,7 @@
           <h2 id="f-company">Project</h2>
           <ul>
             <li><a href="press.html">Press kit</a></li>
-            <li><span class="soon">App — Android soon, iOS later</span></li>
+            <li><a href="#get-app">Get the app</a></li>
             <li><a href="#contact">Support</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -538,6 +612,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/guide-data.js"></script>
+  <script src="js/home-explore.js"></script>
 </body>
 
 </html>
