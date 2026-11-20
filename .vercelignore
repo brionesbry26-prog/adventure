@@ -5,3 +5,7 @@ _backup-original/
 images/*.jpg
 images/*.png
 package.json
+# Private papers and dev files: kept in git, never published.
+pitch/
+test/
+.gitignore
