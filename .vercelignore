@@ -9,3 +9,4 @@ package.json
 pitch/
 test/
 .gitignore
+.env*
