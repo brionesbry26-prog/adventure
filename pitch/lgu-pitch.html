@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Adventure — Proposal to the LGUs of Romblon</title>
+<style>
+  @font-face { font-family: M; src: url("file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/fonts/Montserrat-Regular.ttf"); font-weight: 400; }
+  @font-face { font-family: M; src: url("file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/fonts/Montserrat-Medium.ttf"); font-weight: 500; }
+  @font-face { font-family: M; src: url("file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/fonts/Montserrat-SemiBold.ttf"); font-weight: 600; }
+  @font-face { font-family: M; src: url("file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/fonts/Montserrat-Bold.ttf"); font-weight: 700; }
+  @font-face { font-family: M; src: url("file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/fonts/Montserrat-ExtraBold.ttf"); font-weight: 800; }
+
+  :root { --navy: #1A365D; --orange: #F97316; --ink: #1f2937; --muted: #6b7280; --line: #e5e7eb; --soft: #f8fafc; --tint: #fff4ec; }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #fff; }
+  body { font-family: M, Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .page { width: 210mm; height: 297mm; padding: 20mm 18mm 18mm; position: relative; page-break-after: always; overflow: hidden; }
+  .page:last-child { page-break-after: auto; }
+  .foot { position: absolute; left: 18mm; right: 18mm; bottom: 9mm; display: flex; justify-content: space-between; font-size: 8pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 3mm; }
+
+  h1 { font-size: 22pt; font-weight: 800; color: var(--navy); margin: 0 0 2mm; line-height: 1.15; }
+  h2 { font-size: 12.5pt; font-weight: 700; color: var(--navy); margin: 6mm 0 2mm; }
+  h3 { font-size: 10.5pt; font-weight: 700; color: var(--navy); margin: 0 0 1mm; }
+  p { margin: 0 0 3mm; }
+  .kicker { font-size: 8.5pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); margin-bottom: 2mm; }
+  .lead { font-size: 11.5pt; color: #374151; margin-bottom: 5mm; }
+  ul { margin: 0 0 3mm; padding-left: 5mm; }
+  li { margin-bottom: 1.2mm; }
+  b, strong { font-weight: 700; color: var(--navy); }
+  .muted { color: var(--muted); }
+  .fill { background: #fff3c4; padding: 0 1.5mm; border-radius: 2px; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+  .card { background: var(--soft); border-radius: 3mm; padding: 4mm 4.5mm; }
+  .card.o { background: var(--tint); }
+  .card p, .card ul { margin-bottom: 0; font-size: 9.5pt; }
+  .num { display: inline-flex; width: 7mm; height: 7mm; border-radius: 50%; background: var(--orange); color: #fff; font-weight: 800; font-size: 9pt; align-items: center; justify-content: center; margin-bottom: 2mm; }
+  .stat { font-size: 20pt; font-weight: 800; color: var(--orange); line-height: 1; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin-bottom: 3mm; }
+  th { text-align: left; background: var(--navy); color: #fff; font-weight: 600; padding: 2.2mm 3mm; }
+  td { padding: 2.2mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--soft); }
+  .box { display: inline-block; width: 3.6mm; height: 3.6mm; border: 1.4px solid var(--navy); border-radius: 1mm; vertical-align: -0.6mm; margin-right: 2mm; }
+
+  .quote { border-left: 1.2mm solid var(--orange); padding: 2mm 0 2mm 4mm; font-size: 11.5pt; font-weight: 600; color: var(--navy); margin: 4mm 0; }
+
+  /* Cover */
+  .cover { padding: 0; background: var(--navy); color: #fff; }
+  .cover .photo { height: 150mm; background: url("file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/travelerinbeach.jpg") center/cover; position: relative; }
+  .cover .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(26,54,93,0) 40%, var(--navy) 100%); }
+  .cover .body { padding: 6mm 18mm 0; }
+  .cover img.logo { width: 22mm; height: 22mm; border-radius: 5mm; background: #fff; padding: 2mm; }
+  .cover h1 { color: #fff; font-size: 30pt; margin-top: 5mm; }
+  .cover .sub { font-size: 13pt; color: #dbe4f0; margin-bottom: 8mm; }
+  .cover .meta { font-size: 9.5pt; color: #b9c7da; line-height: 1.7; }
+  .cover .meta b { color: #fff; }
+  .cover .bar { position: absolute; bottom: 0; left: 0; right: 0; height: 4mm; background: var(--orange); }
+
+  .banner { height: 52mm; border-radius: 3mm; background: center/cover; margin-bottom: 5mm; }
+  .toc td { border: none; padding: 1.6mm 0; background: none !important; font-size: 10.5pt; }
+  .toc td:last-child { text-align: right; color: var(--muted); }
+  .sign { border-top: 1px solid var(--ink); width: 60mm; padding-top: 1mm; font-size: 9pt; margin-top: 14mm; }
+  .letter { font-size: 10pt; }
+  .letter p { margin-bottom: 2.6mm; }
+</style>
+</head>
+<body>
+
+<!-- 1. COVER -->
+<section class="page cover">
+  <div class="photo"></div>
+  <div class="body">
+    <img class="logo" src="file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/logo.png" alt="">
+    <h1>Adventure</h1>
+    <div class="sub">A smart travel guide for the Province of Romblon.<br>Proposal for partnership with the Local Government Units.</div>
+    <div class="meta">
+      <b>Prepared for:</b> <span class="fill" style="color:var(--ink)">Office of the Governor / Provincial Tourism Office / Municipal Mayor of ______</span><br>
+      <b>Prepared by:</b> <span class="fill" style="color:var(--ink)">[Your full name], Developer, Adventure</span><br>
+      <b>Contact:</b> adventureromblon@yahoo.com &nbsp;·&nbsp; <span class="fill" style="color:var(--ink)">[mobile number]</span><br>
+      <b>Date:</b> <span class="fill" style="color:var(--ink)">[date of presentation]</span>
+    </div>
+  </div>
+  <div class="bar"></div>
+</section>
+
+<!-- 2. CONTENTS + SUMMARY -->
+<section class="page">
+  <div class="kicker">Contents</div>
+  <table class="toc">
+    <tr><td>1. Executive summary</td><td>2</td></tr>
+    <tr><td>2. The challenge in Romblon tourism</td><td>3</td></tr>
+    <tr><td>3. The solution: Adventure app</td><td>3–4</td></tr>
+    <tr><td>4. What the LGU gains</td><td>5</td></tr>
+    <tr><td>5. Tourism admin dashboard for the LGU</td><td>6</td></tr>
+    <tr><td>6. Data privacy and security</td><td>7</td></tr>
+    <tr><td>7. Partnership proposal: what we ask</td><td>8</td></tr>
+    <tr><td>8. Pilot plan and timeline</td><td>9</td></tr>
+    <tr><td>9. Guide: how to present to the LGU</td><td>10</td></tr>
+    <tr><td>10. Requirements checklist (papers to bring)</td><td>11</td></tr>
+    <tr><td>11. Expected questions and answers</td><td>12</td></tr>
+    <tr><td>Annex A. Letter of intent (template)</td><td>13</td></tr>
+    <tr><td>Annex B. Memorandum of Understanding (outline)</td><td>14</td></tr>
+  </table>
+
+  <h2 style="margin-top:8mm">1. Executive summary</h2>
+  <p><b>Adventure</b> is a mobile travel app made for Romblon. It helps tourists discover places across the province, plan a complete trip with an AI assistant named <b>Isla</b>, check ferry schedules, find their way even without signal, and keep memories of their visit.</p>
+  <p>For the LGU, Adventure is a <b>free digital channel to promote Romblon</b>: official tourist spots, local businesses, events, and transport information in one place, managed through a web dashboard and kept fresh with the help of the community.</p>
+  <div class="quote">"One app where every tourist can discover, plan, and travel Romblon — with information the LGU can trust."</div>
+  <div class="grid3">
+    <div class="card o"><div class="stat">17</div><p>municipalities of Romblon the app is built to cover</p></div>
+    <div class="card o"><div class="stat">1 tap</div><p>to turn a list of saved places into a day-by-day itinerary</p></div>
+    <div class="card o"><div class="stat">Offline</div><p>maps that work on islands with weak or no mobile signal</p></div>
+  </div>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>2</span></div>
+</section>
+
+<!-- 3. CHALLENGE + SOLUTION -->
+<section class="page">
+  <div class="banner" style="height:38mm;background-image:url('file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/ferryview.jpg')"></div>
+  <div class="kicker">Section 2</div>
+  <h1>The challenge</h1>
+  <p class="lead">Romblon has beautiful islands, beaches, falls and heritage sites, but tourists find it hard to plan a visit.</p>
+  <div class="grid2">
+    <div class="card"><h3>Scattered information</h3><p>Tourist spots, resorts and contacts are spread across Facebook pages, blogs and word of mouth. Much of it is outdated.</p></div>
+    <div class="card"><h3>Hard-to-find ferry schedules</h3><p>Trips between islands depend on ferry and boat schedules that change, and tourists often learn about them only at the port.</p></div>
+    <div class="card"><h3>Weak signal on the islands</h3><p>Many destinations have little or no mobile data, so online maps and guides stop working when travelers need them most.</p></div>
+    <div class="card"><h3>Lesser-known towns are missed</h3><p>Visitors cluster in a few known spots. Other municipalities and small local businesses get little exposure.</p></div>
+  </div>
+
+  <div class="kicker" style="margin-top:7mm">Section 3</div>
+  <h1>The solution: Adventure</h1>
+  <p>A free Android app (iOS planned) that guides a tourist from the first idea of a trip until the memories after it.</p>
+  <table>
+    <tr><th style="width:28%">Step of the trip</th><th>What Adventure does</th></tr>
+    <tr><td><b>Discover</b></td><td>Browse places by town and type, with <b>Must visit</b>, <b>Featured</b> and <b>Trending</b> badges, photos, descriptions and the best time to go.</td></tr>
+    <tr><td><b>Plan</b></td><td>Chat with <b>Isla</b>, the AI trip planner. Pick interests (beach, falls, heritage, food…) and get a day-by-day itinerary of up to 6 stops a day.</td></tr>
+    <tr><td><b>Travel</b></td><td>Ferry and boat schedules with the next departure, a route map with distance and travel time between stops, offline maps and weather per day.</td></tr>
+    <tr><td><b>Remember</b></td><td>Photo albums pinned to places, a trip recap on a map, and a shareable trip card that promotes Romblon on social media.</td></tr>
+  </table>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>3</span></div>
+</section>
+
+<!-- 4. FEATURES -->
+<section class="page">
+  <div class="kicker">Section 3 · continued</div>
+  <h1>Main features</h1>
+  <p class="lead">Built and tested on real devices. Already available as a beta version.</p>
+  <div class="grid2">
+    <div class="card"><div class="num">1</div><h3>Isla — AI trip planner</h3><p>Tourists tell Isla their interests and travel dates. Isla builds a complete itinerary that puts the province's must-visit and featured places first.</p></div>
+    <div class="card"><div class="num">2</div><h3>Interactive map itinerary</h3><p>Every stop is a numbered pin on a full-screen map, with the best time to visit, suggested length of stay, and km plus drive or walk time from the last stop.</p></div>
+    <div class="card"><div class="num">3</div><h3>Ferry and transport schedules</h3><p>Routes, operators, fares and weekly schedules, with the next departure in large clear text. Travelers can report port status (e.g. delayed, cancelled) to warn others.</p></div>
+    <div class="card"><div class="num">4</div><h3>Offline maps</h3><p>A trip can be saved for offline use before leaving signal coverage, so maps and the itinerary keep working on the islands.</p></div>
+    <div class="card"><div class="num">5</div><h3>Bucket list and favorites</h3><p>Tourists save places they want to visit, then build a full trip from their list in one tap. Points reward saving and visiting places.</p></div>
+    <div class="card"><div class="num">6</div><h3>Nearby and travel footprints</h3><p>See places close to you with walking or driving time, and a personal map of every place visited in Romblon.</p></div>
+    <div class="card"><div class="num">7</div><h3>Memories and trip recap</h3><p>Photo albums by town and place, a recap of each trip on a map, and a share card for Facebook and other social media.</p></div>
+    <div class="card"><div class="num">8</div><h3>Events, weather and expenses</h3><p>Local events and festivals, the weather for each trip day, and a simple tracker for trip expenses.</p></div>
+  </div>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>4</span></div>
+</section>
+
+<!-- 5. LGU BENEFITS -->
+<section class="page">
+  <div class="kicker">Section 4</div>
+  <h1>What the LGU gains</h1>
+  <p class="lead">Adventure supports the tourism goals of the province and each municipality at no development cost to the LGU.</p>
+  <table>
+    <tr><th style="width:32%">Benefit</th><th>How</th></tr>
+    <tr><td><b>Promote every municipality</b></td><td>All 17 towns are on the map. The Must visit and Featured tags let the LGU push priority destinations, and the AI planner includes them in trips first.</td></tr>
+    <tr><td><b>Official, accurate information</b></td><td>The tourism office can review and correct place details, schedules and photos. Tourists see what the LGU has verified.</td></tr>
+    <tr><td><b>Tourism insights</b></td><td>The dashboard shows which places are saved, planned and visited most, and trends over time. This can support planning and reports (aggregate counts only, no personal data).</td></tr>
+    <tr><td><b>Safer travel</b></td><td>Clear ferry schedules and community port reports reduce stranded tourists. Advisories and events reach travelers directly.</td></tr>
+    <tr><td><b>Support local businesses</b></td><td>Resorts, restaurants and shops listed in the app reach visitors who are already planning a trip to their town.</td></tr>
+    <tr><td><b>Free word-of-mouth marketing</b></td><td>Trip recaps and share cards show Romblon on tourists' social media after every trip.</td></tr>
+    <tr><td><b>Digital tourism initiative</b></td><td>A locally made app that supports the LGU's digital transformation and smart tourism programs.</td></tr>
+  </table>
+  <div class="grid2" style="margin-top:4mm">
+    <div class="card o"><h3>For the Provincial Tourism Office</h3><p>One province-wide platform to coordinate destinations, events and transport information across all municipalities.</p></div>
+    <div class="card o"><h3>For each Municipal Tourism Office</h3><p>A way to feature the town's own spots, festivals and businesses, and to keep their details up to date.</p></div>
+  </div>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>5</span></div>
+</section>
+
+<!-- 6. ADMIN DASHBOARD -->
+<section class="page">
+  <div class="banner" style="background-image:url('file:///C:/Users/gjayc/OneDrive/Desktop/Adventure/assets/hotelviewdeck.jpg')"></div>
+  <div class="kicker">Section 5</div>
+  <h1>Tourism admin dashboard</h1>
+  <p class="lead">A secure web dashboard where authorized tourism staff can manage the information tourists see in the app.</p>
+  <div class="grid2">
+    <div class="card"><h3>Manage places</h3><p>Add and edit tourist spots, photos, descriptions, best time to visit and contact details.</p></div>
+    <div class="card"><h3>Highlights board</h3><p>Choose which places are Must visit, Featured or Trending across the province.</p></div>
+    <div class="card"><h3>Community updates</h3><p>Tourists suggest corrections (closed, new fees, changed hours). Staff review and approve them before they go live.</p></div>
+    <div class="card"><h3>Ferry routes and port reports</h3><p>Maintain routes and schedules and see port status reports from travelers.</p></div>
+    <div class="card"><h3>Photo moderation</h3><p>Review photos shared by users so only appropriate content appears.</p></div>
+    <div class="card"><h3>Activity center and alerts</h3><p>A change log of every edit, a list of items that need attention, and urgent alerts for important reports.</p></div>
+  </div>
+  <p style="margin-top:4mm" class="muted">The LGU can be given its own admin accounts. Every change is recorded with who made it and when.</p>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>6</span></div>
+</section>
+
+<!-- 7. PRIVACY & SECURITY -->
+<section class="page">
+  <div class="kicker">Section 6</div>
+  <h1>Data privacy and security</h1>
+  <p class="lead">Adventure is designed to follow the <b>Data Privacy Act of 2012 (Republic Act No. 10173)</b> and the rules of the National Privacy Commission (NPC).</p>
+  <h2>How we protect users</h2>
+  <ul>
+    <li><b>Minimal data.</b> Only what the app needs: account name and email, saved places, trips and photos the user chooses to upload.</li>
+    <li><b>User control.</b> Users can view and correct their data, and request deletion of their account and data through Help &amp; support or email (completed within 30 days). A Privacy Policy and Terms of Use explain this in plain language.</li>
+    <li><b>No selling of data.</b> Personal data is never sold. Reports to the LGU use aggregate counts only (e.g. "120 visits to this place this month").</li>
+    <li><b>Secure cloud.</b> Hosted on Google Firebase with encrypted connections and strict access rules on every record. App verification to block fake clients is being enabled.</li>
+    <li><b>Admin protection.</b> Admin powers run only through checked server functions. Admin sessions log out when idle, and every admin action is recorded in an audit log.</li>
+    <li><b>Content moderation.</b> Photos and community reports are reviewed before they are shown publicly.</li>
+  </ul>
+  <h2>Compliance steps</h2>
+  <table>
+    <tr><th>Item</th><th style="width:28%">Status</th></tr>
+    <tr><td>Privacy Policy and Terms of Use published</td><td>Done (on website)</td></tr>
+    <tr><td>Account and data deletion on request</td><td>Done (via support, within 30 days)</td></tr>
+    <tr><td>Designated Data Protection Officer (DPO)</td><td><span class="fill">[name / to do]</span></td></tr>
+    <tr><td>Privacy Impact Assessment (PIA)</td><td><span class="fill">[to do]</span></td></tr>
+    <tr><td>NPC registration (if required by the volume of data processed)</td><td><span class="fill">[check with NPC]</span></td></tr>
+    <tr><td>Data Sharing Agreement with the LGU (if LGU data is shared)</td><td>Upon partnership</td></tr>
+  </table>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>7</span></div>
+</section>
+
+<!-- 8. THE ASK -->
+<section class="page">
+  <div class="kicker">Section 7</div>
+  <h1>Partnership proposal</h1>
+  <p class="lead">We are asking the LGU for support, not funding. These are the specific requests:</p>
+  <div class="grid2">
+    <div class="card o"><div class="num">1</div><h3>Official endorsement</h3><p>A letter of endorsement or a Sanggunian resolution recognizing Adventure as a partner travel guide app for Romblon.</p></div>
+    <div class="card o"><div class="num">2</div><h3>Official tourism data</h3><p>Access to the list of accredited tourist spots, resorts and establishments, event calendars and official fees.</p></div>
+    <div class="card o"><div class="num">3</div><h3>A focal person</h3><p>One contact in the Tourism Office to review place information and approve updates through the dashboard.</p></div>
+    <div class="card o"><div class="num">4</div><h3>Promotion</h3><p>Sharing the app on official LGU pages, and QR code posters at ports, tourism offices and major tourist spots.</p></div>
+    <div class="card o"><div class="num">5</div><h3>Transport coordination</h3><p>Help in getting accurate ferry schedules from port authorities and shipping operators.</p></div>
+    <div class="card o"><div class="num">6</div><h3>Pilot area</h3><p>Permission to run a pilot in one or more municipalities and gather feedback from tourists and the office.</p></div>
+  </div>
+  <h2>What Adventure provides</h2>
+  <ul>
+    <li>The app, free for tourists to download and use.</li>
+    <li>Dashboard accounts and training for tourism office staff.</li>
+    <li>Technical maintenance, updates and hosting <span class="fill">[proposed terms, e.g. at no cost during the pilot]</span>.</li>
+    <li>Regular reports on app usage (aggregate, no personal data).</li>
+    <li>QR code posters and promotional materials for LGU use.</li>
+  </ul>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>8</span></div>
+</section>
+
+<!-- 9. TIMELINE -->
+<section class="page">
+  <div class="kicker">Section 8</div>
+  <h1>Pilot plan and timeline</h1>
+  <p class="lead">A suggested schedule. Dates will be agreed with the LGU.</p>
+  <table>
+    <tr><th style="width:20%">Phase</th><th style="width:18%">Duration</th><th>Activities</th></tr>
+    <tr><td><b>1. Courtesy call</b></td><td>Week 1</td><td>Present the app, submit the letter of intent and proposal, identify the focal person.</td></tr>
+    <tr><td><b>2. Agreement</b></td><td>Weeks 2–4</td><td>Review and sign the MOU, data sharing agreement if needed, endorsement letter or resolution.</td></tr>
+    <tr><td><b>3. Data setup</b></td><td>Weeks 3–6</td><td>Load and verify official places, ferry schedules and events with the Tourism Office. Train staff on the dashboard.</td></tr>
+    <tr><td><b>4. Pilot launch</b></td><td>Months 2–4</td><td>Launch in the pilot municipalities. Place QR posters at ports and tourist spots. Collect feedback.</td></tr>
+    <tr><td><b>5. Evaluation</b></td><td>Month 4</td><td>Submit a pilot report: downloads, places visited, feedback, issues fixed. Agree on next steps.</td></tr>
+    <tr><td><b>6. Province-wide</b></td><td>Month 5 onward</td><td>Expand to all 17 municipalities with each Municipal Tourism Office.</td></tr>
+  </table>
+  <h2>How success will be measured</h2>
+  <div class="grid3">
+    <div class="card"><h3>Reach</h3><p>App downloads and active users during the pilot.</p></div>
+    <div class="card"><h3>Engagement</h3><p>Trips planned, places saved and visits recorded per municipality.</p></div>
+    <div class="card"><h3>Quality</h3><p>Accuracy of information, number of community updates resolved, tourist feedback.</p></div>
+  </div>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>9</span></div>
+</section>
+
+<!-- 10. PRESENTATION GUIDE -->
+<section class="page">
+  <div class="kicker">Section 9 · For the presenter</div>
+  <h1>How to present to the LGU</h1>
+  <h2>Before the meeting</h2>
+  <ul>
+    <li>Send the <b>letter of intent</b> to the Tourism Office and ask for a schedule (courtesy call). Follow up by phone after 3–5 working days.</li>
+    <li>Learn the LGU's tourism priorities: their tourism development plan, flagship destinations and upcoming festivals. Mention them in your talk.</li>
+    <li>Make sure that town's places are in the app with good photos before you present.</li>
+    <li>Prepare the demo on <b>two phones</b>, logged in, with a trip already planned and saved offline. Do not depend on venue Wi-Fi or signal.</li>
+    <li>Print <b>5–10 copies</b> of this proposal and bring a USB copy of the slides and the video ad.</li>
+    <li>Wear business casual. Arrive 15 minutes early.</li>
+  </ul>
+  <h2>Suggested flow (20 minutes)</h2>
+  <table>
+    <tr><th style="width:16%">Time</th><th style="width:26%">Part</th><th>What to say or show</th></tr>
+    <tr><td>1 min</td><td><b>Greeting</b></td><td>Thank the officials, introduce yourself and the purpose of the visit.</td></tr>
+    <tr><td>2 min</td><td><b>The problem</b></td><td>Scattered info, ferry schedules, weak signal. Use a real local example.</td></tr>
+    <tr><td>1 min</td><td><b>Video ad</b></td><td>Play the short Adventure video.</td></tr>
+    <tr><td>7 min</td><td><b>Live demo</b></td><td>Their town's places → ask Isla to plan a trip → map itinerary → ferry schedule → offline mode → admin dashboard.</td></tr>
+    <tr><td>3 min</td><td><b>Benefits and privacy</b></td><td>What the LGU gains (Section 4) and how users' data is protected (Section 6).</td></tr>
+    <tr><td>2 min</td><td><b>The ask</b></td><td>Endorsement, data, focal person, pilot (Section 7). Be specific.</td></tr>
+    <tr><td>4 min</td><td><b>Q&amp;A</b></td><td>Answer clearly. If unsure, promise to follow up in writing.</td></tr>
+  </table>
+  <h2>After the meeting</h2>
+  <ul>
+    <li>Send a thank-you letter within 3 days with the answers you promised and the draft MOU.</li>
+    <li>Note who attended, their concerns and the agreed next steps.</li>
+  </ul>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>10</span></div>
+</section>
+
+<!-- 11. CHECKLIST -->
+<section class="page">
+  <div class="kicker">Section 10 · For the presenter</div>
+  <h1>Requirements checklist</h1>
+  <p class="lead">Papers commonly asked by LGUs. Requirements differ per office, so confirm the list with the Tourism Office before your visit.</p>
+  <h2>To bring to the presentation</h2>
+  <table>
+    <tr><td><span class="box"></span><b>Letter of intent</b> addressed to the Governor or Mayor, through the Tourism Office (Annex A)</td></tr>
+    <tr><td><span class="box"></span><b>Project proposal</b> (this document), printed and signed</td></tr>
+    <tr><td><span class="box"></span><b>Presentation slides</b> and the <b>video ad</b> (USB and phone copy)</td></tr>
+    <tr><td><span class="box"></span><b>Working demo</b> on two phones, plus a way to install the beta for staff</td></tr>
+    <tr><td><span class="box"></span><b>Valid government ID</b> and a short profile or resume of the developer/team</td></tr>
+    <tr><td><span class="box"></span><b>Privacy Policy and Terms of Use</b>, printed</td></tr>
+    <tr><td><span class="box"></span><b>Draft MOU</b> (Annex B) for the LGU legal office to review</td></tr>
+  </table>
+  <h2>Depending on your status</h2>
+  <table>
+    <tr><th style="width:38%">If you are…</th><th>Usually needed</th></tr>
+    <tr><td><b>A business</b></td><td>DTI (sole proprietor) or SEC registration, BIR Certificate of Registration, Mayor's/Business Permit</td></tr>
+    <tr><td><b>A student or capstone project</b></td><td>Endorsement letter from your school, dean or adviser, and school ID</td></tr>
+    <tr><td><b>An individual developer</b></td><td>Valid ID, profile/portfolio; business registration if you plan to earn from the app</td></tr>
+  </table>
+  <h2>Usually needed after approval</h2>
+  <table>
+    <tr><td><span class="box"></span><b>Signed MOU / MOA</b> with the Provincial or Municipal LGU</td></tr>
+    <tr><td><span class="box"></span><b>Endorsement letter</b> or <b>Sangguniang Bayan / Panlalawigan resolution</b></td></tr>
+    <tr><td><span class="box"></span><b>Data Sharing Agreement</b> (if the LGU shares data that includes personal information)</td></tr>
+    <tr><td><span class="box"></span><b>Privacy documents:</b> DPO designation, Privacy Impact Assessment, NPC registration if required</td></tr>
+    <tr><td><span class="box"></span><b>Permission to use</b> LGU logos and official photos in the app and posters</td></tr>
+    <tr><td><span class="box"></span><i>Optional:</i> copyright registration of the app with IPOPHL</td></tr>
+  </table>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>11</span></div>
+</section>
+
+<!-- 12. Q&A -->
+<section class="page">
+  <div class="kicker">Section 11 · For the presenter</div>
+  <h1>Expected questions</h1>
+  <p class="lead">Prepare short, honest answers. Edit these to match your final terms.</p>
+  <table>
+    <tr><th style="width:36%">Question</th><th>Suggested answer</th></tr>
+    <tr><td><b>How much will this cost the LGU?</b></td><td><span class="fill">[Your terms.]</span> The app is free for tourists. We are asking for endorsement, data and a focal person, not funding.</td></tr>
+    <tr><td><b>Who updates the information?</b></td><td>The Tourism Office through the dashboard, with help from tourists' suggested updates. Nothing goes live without review.</td></tr>
+    <tr><td><b>Is the users' data safe?</b></td><td>Yes. We follow the Data Privacy Act, collect minimal data, never sell it, and share only aggregate counts with the LGU (Section 6).</td></tr>
+    <tr><td><b>What if there is no signal?</b></td><td>Trips and maps can be saved offline before traveling. Show this in the demo.</td></tr>
+    <tr><td><b>Are ferry schedules accurate?</b></td><td>They are estimates (ETD) from operators and are labeled that way. With LGU help we can get official schedules, and tourists report port status in real time.</td></tr>
+    <tr><td><b>Is it on iPhone?</b></td><td>Android first; iOS is planned <span class="fill">[target date]</span>.</td></tr>
+    <tr><td><b>Can businesses be listed?</b></td><td>Yes. Accredited resorts, restaurants and shops can be added through the dashboard.</td></tr>
+    <tr><td><b>What happens if the developer stops?</b></td><td>The MOU can include continuity terms, such as data turnover to the LGU <span class="fill">[agree on terms]</span>.</td></tr>
+    <tr><td><b>How is the AI controlled?</b></td><td>Isla plans trips only from the places in our verified database, and gives priority to the places the LGU marks as Must visit or Featured.</td></tr>
+  </table>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>12</span></div>
+</section>
+
+<!-- ANNEX A -->
+<section class="page letter">
+  <div class="kicker">Annex A · Template</div>
+  <h1 style="font-size:16pt">Letter of intent</h1>
+  <p class="muted" style="margin-bottom:6mm">Fill in the highlighted parts, print on clean bond paper, sign, and keep a receiving copy.</p>
+  <p><span class="fill">[Date]</span></p>
+  <p><b><span class="fill">HON. [FULL NAME]</span></b><br><span class="fill">Governor, Province of Romblon / Municipal Mayor of ______</span><br><span class="fill">[Office address]</span></p>
+  <p>Through: <b><span class="fill">[Name]</span></b>, <span class="fill">Provincial / Municipal Tourism Officer</span></p>
+  <p>Dear <span class="fill">Governor / Mayor [Surname]</span>:</p>
+  <p>Greetings!</p>
+  <p>I am <span class="fill">[full name]</span>, the developer of <b>Adventure</b>, a mobile travel guide application made for the Province of Romblon. The app helps tourists discover destinations in all municipalities, plan trips with an AI assistant, view ferry schedules, use maps offline, and share their experiences on social media.</p>
+  <p>In support of the tourism programs of your good office, I respectfully request the opportunity to present Adventure to you and the Tourism Office through a courtesy call, and to explore a partnership. Specifically, we hope to discuss: (1) endorsement of the app; (2) access to official tourism information; (3) the designation of a focal person; and (4) a pilot implementation in <span class="fill">[municipality/ies]</span>.</p>
+  <p>The app is free for tourists, and we will provide the training, maintenance and usage reports needed. All user data is handled in accordance with the Data Privacy Act of 2012 (RA 10173).</p>
+  <p>Attached are the project proposal and our Privacy Policy for your reference. I am available at your most convenient time and may be reached at <span class="fill">[mobile number]</span> or adventureromblon@yahoo.com.</p>
+  <p>Thank you very much, and I look forward to your favorable response.</p>
+  <p style="margin-top:6mm">Respectfully yours,</p>
+  <div class="sign"><b><span class="fill">[FULL NAME]</span></b><br>Developer, Adventure</div>
+  <p class="muted" style="margin-top:8mm; font-size:8.5pt">Enclosures: Project proposal; Privacy Policy and Terms of Use; Developer profile; <span class="fill">[School endorsement / DTI registration]</span></p>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>13</span></div>
+</section>
+
+<!-- ANNEX B -->
+<section class="page">
+  <div class="kicker">Annex B · Outline</div>
+  <h1 style="font-size:16pt">Memorandum of Understanding — outline</h1>
+  <p class="lead">A starting point for discussion. The final MOU should be reviewed by the LGU legal office.</p>
+  <table>
+    <tr><th style="width:30%">Section</th><th>Content</th></tr>
+    <tr><td><b>Parties</b></td><td>The Province / Municipality of <span class="fill">______</span>, represented by <span class="fill">[name, position]</span>, and Adventure, represented by <span class="fill">[name]</span>.</td></tr>
+    <tr><td><b>Purpose</b></td><td>Cooperation to promote Romblon tourism through the Adventure travel app.</td></tr>
+    <tr><td><b>Duties of the LGU</b></td><td>Endorse the app; share official tourism data; assign a focal person; help promote the app; coordinate with ports and operators.</td></tr>
+    <tr><td><b>Duties of Adventure</b></td><td>Operate and maintain the app; give dashboard access and training; provide usage reports; correct information when requested; protect user data.</td></tr>
+    <tr><td><b>Data privacy</b></td><td>Compliance with RA 10173; personal data not shared or sold; aggregate reports only; Data Sharing Agreement if needed.</td></tr>
+    <tr><td><b>Use of names and logos</b></td><td>Use of LGU logos and photos only for the app and agreed promotional materials.</td></tr>
+    <tr><td><b>Intellectual property</b></td><td>The app remains owned by the developer. LGU-supplied content remains owned by the LGU.</td></tr>
+    <tr><td><b>Cost</b></td><td><span class="fill">[e.g. no financial obligation for either party during the pilot]</span></td></tr>
+    <tr><td><b>Term and renewal</b></td><td><span class="fill">[e.g. one year]</span> from signing, renewable by mutual agreement.</td></tr>
+    <tr><td><b>Termination</b></td><td>Either party may end the MOU with <span class="fill">[30]</span> days' written notice; LGU data is returned or deleted upon request.</td></tr>
+    <tr><td><b>Signatures</b></td><td>Signed by both parties, with two witnesses, and notarized if required.</td></tr>
+  </table>
+  <div class="quote" style="margin-top:8mm">Adventure — Discover, plan and travel Romblon.</div>
+  <p class="muted">adventureromblon@yahoo.com · <span class="fill">[mobile number]</span></p>
+  <div class="foot"><span>Adventure · Proposal to the LGUs of Romblon</span><span>14</span></div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Not part of the published site (the pages use images/web/ and images/topo.svg).
+_backup-original/
+.claude/
+.vscode/
+images/*.jpg
+images/*.png
+package.json
