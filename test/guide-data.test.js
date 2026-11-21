@@ -235,3 +235,23 @@ test('a stopped vessel can say its new schedule', () => {
   assert.equal(G.pauseText({ paused: { on: true, newSchedule: 'Daily 7:00 AM' } }, now),
     'Not sailing until further notice · New schedule: Daily 7:00 AM');
 });
+
+test('schedule changes: text, which trips run, and the board', () => {
+  const c = { routeId: 'r1', from: 'A Port', to: 'B Port', startDate: '2026-11-18', endDate: '2026-11-22', kind: 'afternoon', note: 'Per the operator' };
+  assert.equal(G.changeText(c), 'Nov 18 – Nov 22 · Afternoon trips only · Per the operator');
+  assert.equal(G.changeText({ ...c, endDate: '2026-11-18', kind: 'custom', times: ['7:00 AM'], note: '' }), 'Nov 18 · Trips at 7:00 AM');
+  assert.equal(G.runsUnder(c, '1:00 PM'), true);
+  assert.equal(G.runsUnder(c, '7:00 AM'), false);
+  assert.equal(G.runsUnder({ kind: 'none' }, '7:00 AM'), false);
+  const now = new Date('2026-11-20T02:00:00Z'); // Fri Nov 20 in Manila
+  assert.equal(G.currentChanges([c, { ...c, startDate: '2026-11-01', endDate: '2026-11-02' }], now).length, 1);
+
+  const terminals = [{ name: 'A Port', ferries: [{ name: 'MV Maria', routes: [{ id: 'r1', from: 'A Port', to: 'B Port',
+    daySchedules: [{ days: [], open: '7:00 AM' }, { days: [], open: '1:00 PM' }] }] }] }];
+  const rows = G.portBoard(terminals, [], 'A Port', true, now, [c]);
+  assert.deepEqual(rows.map((r) => [r.time, r.status]), [['7:00 AM', 'changed-off'], ['1:00 PM', 'changed']]);
+  const custom = G.portBoard(terminals, [], 'A Port', true, now, [{ ...c, kind: 'custom', times: ['9:00 AM'] }]);
+  assert.deepEqual(custom.map((r) => [r.time, r.status]), [['9:00 AM', 'changed']]);
+  // All week shows the usual schedule.
+  assert.equal(G.portBoard(terminals, [], 'A Port', false, now, [c])[0].status, '');
+});

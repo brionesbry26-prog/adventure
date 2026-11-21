@@ -772,7 +772,7 @@
   }
 
   // ── Departures board (a port, like the board at the terminal) ──────
-  function departures(terminals, statuses) {
+  function departures(terminals, statuses, changes) {
     var ports = G.boardPorts(terminals);
     var s = section('Departures', 'Pick a port to see what leaves from it. Times can change — check with the shipping line before you travel.');
     if (!ports.length) { s.appendChild(el('p', 'g-empty', 'Ferry schedules are being added.')); return s; }
@@ -804,7 +804,7 @@
       add(head, el('span', 'g-board-title', 'Departures'), el('span', 'g-board-port', port),
         el('span', 'g-board-date', todayOnly ? G.manilaWeekday(now) + ' · ' + dateText : 'All week'));
       board.appendChild(head);
-      var rows = G.portBoard(terminals, statuses, port, todayOnly, now);
+      var rows = G.portBoard(terminals, statuses, port, todayOnly, now, changes);
       if (!rows.length) {
         board.appendChild(el('p', 'g-board-empty', todayOnly ? 'No sailings listed for today from this port. Try “All week”.' : 'No sailings listed from this port yet.'));
         return;
@@ -814,7 +814,9 @@
       board.appendChild(cols);
       rows.forEach(function (x) {
         var row = el('div', 'g-board-row' + (x.status ? ' ' + x.status : ''));
-        var status = x.status === 'paused' ? x.pause
+        var status = x.status === 'changed' ? 'Schedule change'
+          : x.status === 'changed-off' ? 'Not running today'
+          : x.status === 'paused' ? x.pause
           : x.status === 'cancelled' ? 'Cancelled' + (x.resume ? ' · ' + x.resume : '')
             : x.status === 'delayed' ? 'Delayed' + (x.newTime ? ' → ' + x.newTime : '') + (x.resume ? ' · ' + x.resume : '') : 'On schedule';
         var st = el('span', 'g-board-status ' + (x.status || 'ok'), status);
@@ -843,17 +845,29 @@
     Promise.all([
       list('terminals'), list('route_status').catch(function () { return []; }),
       list('boat_routes').catch(function () { return []; }), list('fare_guides').catch(function () { return []; }),
-      list('hotlines').catch(function () { return []; })
+      list('hotlines').catch(function () { return []; }),
+      list('schedule_changes').catch(function () { return []; })
     ]).then(function (r) {
       var adv = G.activeAdvisories(r[1]), boats = r[2], fares = r[3];
+      var changes = G.currentChanges(r[5]);
       box.textContent = '';
       var page = el('div', 'wrap');
       var live = section('Live status', adv.length ? 'Delays and cancellations posted by the ports.' : '');
       if (adv.length) live.appendChild(advisoryList(adv));
       else live.appendChild(el('p', 'g-ok', 'No delays or cancellations posted right now.'));
+      if (changes.length) {
+        var sc = el('div', 'g-advisories');
+        changes.forEach(function (c) {
+          var a = el('div', 'g-advisory changed');
+          add(a, el('strong', null, 'Schedule change: ' + [c.vessel || c.operator, (c.from || '') + ' → ' + (c.to || '')].filter(Boolean).join(' · ')),
+            el('p', null, G.changeText(c)));
+          sc.appendChild(a);
+        });
+        live.appendChild(sc);
+      }
       page.appendChild(live);
 
-      page.appendChild(departures(r[0], r[1]));
+      page.appendChild(departures(r[0], r[1], r[5]));
 
       var towns = G.TOWNS.filter(function (t) { return G.boatsIn(boats, t).length || G.faresIn(fares, t).length; });
       if (towns.length) {

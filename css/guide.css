@@ -259,3 +259,8 @@ a.g-stop-name { text-decoration: underline; text-underline-offset: 3px; }
 
 .g-board-status.paused { background: rgba(255, 255, 255, .12); color: var(--on-dark-2); white-space: normal; }
 .g-board-row.paused .g-board-time { text-decoration: line-through; color: var(--on-dark-3); }
+
+.g-advisory.changed { background: rgba(91, 58, 158, .08); color: #4B2E83; }
+.g-board-status.changed { background: rgba(155, 125, 220, .22); color: #fff; }
+.g-board-status.changed-off { background: rgba(255, 255, 255, .12); color: var(--on-dark-2); }
+.g-board-row.changed-off .g-board-time { text-decoration: line-through; color: var(--on-dark-3); }

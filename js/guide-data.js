@@ -418,6 +418,59 @@
     return h * 60 + +m[2];
   }
 
+  // ── Schedule changes for some days (admin › Live status) ──
+  var CHANGE_KINDS = {
+    morning: 'Morning trips only', afternoon: 'Afternoon trips only',
+    whole_day: 'Morning and afternoon trips', none: 'No trips'
+  };
+
+  function shortDate(d) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str(d));
+    return m ? MONTHS[+m[2] - 1].slice(0, 3) + ' ' + (+m[3]) : '';
+  }
+
+  /** "Nov 18 – Nov 22 · Afternoon trips only · note" */
+  function changeText(c) {
+    var start = str(c.startDate), end = str(c.endDate) || start;
+    var days = start === end ? shortDate(start) : shortDate(start) + ' – ' + shortDate(end);
+    var what = c.kind === 'custom'
+      ? ((c.times || []).length ? 'Trips at ' + c.times.join(', ') : 'Different schedule')
+      : CHANGE_KINDS[c.kind] || 'Different schedule';
+    return [days, what, str(c.note)].filter(Boolean).join(' · ');
+  }
+
+  /** Changes not over yet, soonest first. */
+  function currentChanges(changes, now) {
+    var today = manilaToday(now);
+    return (changes || []).filter(function (c) { return str(c.endDate || c.startDate) >= today && str(c.startDate); })
+      .sort(function (a, b) { return str(a.startDate).localeCompare(str(b.startDate)); });
+  }
+
+  /** The change for route [r] of vessel [f] on [day], if any. */
+  function changeFor(changes, f, r, day) {
+    var names = [str(f.vesselName), str(f.name)].filter(Boolean);
+    var found = null;
+    (changes || []).forEach(function (c) {
+      var start = str(c.startDate), end = str(c.endDate) || start;
+      if (!start || day < start || day > end) return;
+      var byId = c.routeId && r.id && c.routeId === r.id;
+      var byName = str(c.from) === str(r.from) && str(c.to) === str(r.to) &&
+        (names.indexOf(str(c.vessel)) >= 0 || names.indexOf(str(c.operator)) >= 0);
+      if (byId || byName) found = c;
+    });
+    return found;
+  }
+
+  /** Whether a trip at [time] runs under change [c]. */
+  function runsUnder(c, time) {
+    var m = timeMinutes(time);
+    if (c.kind === 'none') return false;
+    if (c.kind === 'morning') return m < 12 * 60;
+    if (c.kind === 'afternoon') return m >= 12 * 60 && m <= 24 * 60;
+    if (c.kind === 'custom') return (c.times || []).some(function (t) { return timeMinutes(t) === m; });
+    return true;
+  }
+
   /** "Resumes Nov 25" from 'YYYY-MM-DD' ('' when not set). */
   function resumeText(d) {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str(d));
@@ -447,21 +500,48 @@
    * time, with the live delay / cancellation. [todayOnly]: just the
    * sailings that run today (Manila).
    */
-  function portBoard(terminals, statuses, portName, todayOnly, now) {
+  function portBoard(terminals, statuses, portName, todayOnly, now, changes) {
     var t = (terminals || []).filter(function (x) { return str(x.name) === portName; })[0];
     if (!t) return [];
     var live = activeAdvisories(statuses, now);
     var weekday = manilaWeekday(now);
+    var today = manilaToday(now);
     var rows = [];
     (t.ferries || []).forEach(function (f) {
       var pause = pauseText(f, now);
       (f.routes || []).forEach(function (r) {
         if (!str(r.from) || !str(r.to)) return;
         var st = live.filter(function (s) { return (s.routeId && s.routeId === r.id) || (!s.routeId && str(s.from) === str(r.from) && str(s.to) === str(r.to)); })[0];
+        // Today's schedule change: trips it leaves out say so; custom
+        // times are added.
+        var ch = todayOnly && !pause ? changeFor(changes, f, r, today) : null;
+        var base = {
+          to: str(r.to),
+          vessel: str(f.vesselName) && str(f.vesselName) !== str(f.name) ? str(f.vesselName) : '',
+          operator: str(f.name),
+          type: BOAT_TYPE[str(f.vesselType)] || ''
+        };
+        if (ch && ch.kind === 'custom') {
+          (ch.times || []).forEach(function (time) {
+            rows.push(Object.assign({}, base, {
+              time: str(time), days: '', status: 'changed', pause: '', resume: '', newTime: '',
+              reason: changeText(ch)
+            }));
+          });
+          return;
+        }
         (r.daySchedules || []).forEach(function (s) {
           if (s.closed) return;
           var days = (s.days || []).map(str).filter(Boolean);
           if (todayOnly && days.length && days.indexOf(weekday) < 0) return;
+          if (ch) {
+            var runs = runsUnder(ch, s.open);
+            rows.push(Object.assign({}, base, {
+              time: str(s.open) || '—', days: daysText(days), status: runs ? 'changed' : 'changed-off',
+              pause: '', resume: '', newTime: '', reason: changeText(ch)
+            }));
+            return;
+          }
           rows.push({
             time: str(s.open) || '—',
             to: str(r.to),
@@ -484,6 +564,7 @@
   var api = {
     manilaWeekday: manilaWeekday, boardPorts: boardPorts, portBoard: portBoard,
     resumeText: resumeText, pauseText: pauseText,
+    changeText: changeText, currentChanges: currentChanges, changeFor: changeFor, runsUnder: runsUnder,
     toursShown: toursShown, tourRoute: tourRoute, tourPrice: tourPrice, tourIncluded: tourIncluded,
     tourMonths: tourMonths, tourOffer: tourOffer, toursForPlace: toursForPlace,
     pasalubongShown: pasalubongShown, pasalubongPhone: pasalubongPhone, pasalubongKind: pasalubongKind,
