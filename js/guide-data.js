@@ -175,7 +175,7 @@
         (f.routes || []).forEach(function (r) {
           if (!str(r.from) || !str(r.to)) return;
           var sailings = (r.daySchedules || []).filter(function (s) { return !s.closed; })
-            .map(function (s) { return { days: daysText(s.days), time: str(s.open) }; })
+            .map(function (s) { return { days: daysText(s.days), time: (s.trips && s.trips.length ? s.trips.map(function (t) { return str(t.time); }) : [str(s.open)]).filter(Boolean).join(', ') }; })
             .filter(function (s) { return s.days || s.time; });
           out.push({
             id: str(r.id), from: str(r.from), to: str(r.to),
@@ -435,8 +435,19 @@
     var days = start === end ? shortDate(start) : shortDate(start) + ' – ' + shortDate(end);
     var what = c.kind === 'custom'
       ? ((c.times || []).length ? 'Trips at ' + c.times.join(', ') : 'Different schedule')
-      : CHANGE_KINDS[c.kind] || 'Different schedule';
-    return [days, what, str(c.note)].filter(Boolean).join(' · ');
+      : c.kind === 'weekly' ? 'Weekly schedule' : CHANGE_KINDS[c.kind] || 'Different schedule';
+    return [days, what, c.kind === 'weekly' ? str(c.summary) : '', str(c.note)].filter(Boolean).join(' · ');
+  }
+
+  var WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  /** The trips a change lists for [day] ('YYYY-MM-DD'): custom times, or a weekly change's times that weekday. */
+  function changeTimes(c, day) {
+    if (c.kind === 'custom') return c.times || [];
+    if (c.kind !== 'weekly') return null;
+    var p = String(day).split('-').map(Number);
+    var wd = WEEKDAY_NAMES[new Date(Date.UTC(p[0], p[1] - 1, p[2])).getUTCDay()];
+    return ((c.week || {})[wd] || []);
   }
 
   /** Changes not over yet, soonest first. */
@@ -467,7 +478,7 @@
     if (c.kind === 'none') return false;
     if (c.kind === 'morning') return m < 12 * 60;
     if (c.kind === 'afternoon') return m >= 12 * 60 && m <= 24 * 60;
-    if (c.kind === 'custom') return (c.times || []).some(function (t) { return timeMinutes(t) === m; });
+    if (c.kind === 'custom' || c.kind === 'weekly') return false;
     return true;
   }
 
@@ -521,8 +532,15 @@
           operator: str(f.name),
           type: BOAT_TYPE[str(f.vesselType)] || ''
         };
-        if (ch && ch.kind === 'custom') {
-          (ch.times || []).forEach(function (time) {
+        var listed = ch ? changeTimes(ch, today) : null;
+        if (listed) {
+          if (!listed.length) {
+            rows.push(Object.assign({}, base, {
+              time: '—', days: '', status: 'changed-off', pause: '', resume: '', newTime: '',
+              reason: changeText(ch)
+            }));
+          }
+          listed.forEach(function (time) {
             rows.push(Object.assign({}, base, {
               time: str(time), days: '', status: 'changed', pause: '', resume: '', newTime: '',
               reason: changeText(ch)
@@ -534,16 +552,18 @@
           if (s.closed) return;
           var days = (s.days || []).map(str).filter(Boolean);
           if (todayOnly && days.length && days.indexOf(weekday) < 0) return;
+          var times = s.trips && s.trips.length ? s.trips.map(function (t) { return str(t.time); }).filter(Boolean) : [str(s.open)];
+          times.forEach(function (time) {
           if (ch) {
-            var runs = runsUnder(ch, s.open);
+            var runs = runsUnder(ch, time);
             rows.push(Object.assign({}, base, {
-              time: str(s.open) || '—', days: daysText(days), status: runs ? 'changed' : 'changed-off',
+              time: time || '—', days: daysText(days), status: runs ? 'changed' : 'changed-off',
               pause: '', resume: '', newTime: '', reason: changeText(ch)
             }));
             return;
           }
           rows.push({
-            time: str(s.open) || '—',
+            time: time || '—',
             to: str(r.to),
             vessel: str(f.vesselName) && str(f.vesselName) !== str(f.name) ? str(f.vesselName) : '',
             operator: str(f.name),
@@ -555,6 +575,7 @@
             newTime: st ? str(st.newDepartureTime) : '',
             reason: pause ? str(f.paused.reason) : st ? str(st.reason) : ''
           });
+          });
         });
       });
     });
@@ -565,6 +586,7 @@
     manilaWeekday: manilaWeekday, boardPorts: boardPorts, portBoard: portBoard,
     resumeText: resumeText, pauseText: pauseText,
     changeText: changeText, currentChanges: currentChanges, changeFor: changeFor, runsUnder: runsUnder,
+    changeTimes: changeTimes,
     toursShown: toursShown, tourRoute: tourRoute, tourPrice: tourPrice, tourIncluded: tourIncluded,
     tourMonths: tourMonths, tourOffer: tourOffer, toursForPlace: toursForPlace,
     pasalubongShown: pasalubongShown, pasalubongPhone: pasalubongPhone, pasalubongKind: pasalubongKind,

@@ -255,3 +255,18 @@ test('schedule changes: text, which trips run, and the board', () => {
   // All week shows the usual schedule.
   assert.equal(G.portBoard(terminals, [], 'A Port', false, now, [c])[0].status, '');
 });
+
+test('a boat\'s trip schedule: several departures a day, and a dated week', () => {
+  const now = new Date('2026-11-23T02:00:00Z'); // Mon Nov 23 in Manila
+  const terminals = [{ name: 'Santa Fe Port', ferries: [{ name: 'MB Micca', routes: [{ id: 'out', from: 'Santa Fe Port', to: 'Caticlan',
+    daySchedules: [{ days: ['Monday'], open: '7:00 AM', trips: [{ time: '7:00 AM' }, { time: '1:00 PM' }] }] }] }] }];
+  assert.deepEqual(G.portBoard(terminals, [], 'Santa Fe Port', true, now, []).map((r) => r.time), ['7:00 AM', '1:00 PM']);
+  const weekly = { routeId: 'out', from: 'Santa Fe Port', to: 'Caticlan', startDate: '2026-11-23', endDate: '2026-11-29',
+    kind: 'weekly', week: { Monday: ['1:00 PM'], Thursday: [] }, summary: 'Mon: Afternoon only' };
+  assert.deepEqual(G.portBoard(terminals, [], 'Santa Fe Port', true, now, [weekly]).map((r) => [r.time, r.status]), [['1:00 PM', 'changed']]);
+  const thu = new Date('2026-11-26T02:00:00Z');
+  const thuTerminals = [{ name: 'Santa Fe Port', ferries: [{ name: 'MB Micca', routes: [{ id: 'out', from: 'Santa Fe Port', to: 'Caticlan',
+    daySchedules: [{ days: [], open: '7:00 AM' }] }] }] }];
+  assert.deepEqual(G.portBoard(thuTerminals, [], 'Santa Fe Port', true, thu, [weekly]).map((r) => r.status), ['changed-off']);
+  assert.equal(G.changeText(weekly), 'Nov 23 – Nov 29 · Weekly schedule · Mon: Afternoon only');
+});
