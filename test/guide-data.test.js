@@ -227,3 +227,11 @@ test('resume dates: advisories say when, a paused vessel says not sailing', () =
   assert.equal(rows[1].status, 'cancelled');
   assert.equal(rows[1].resume, 'Resumes Nov 22');
 });
+
+test('a stopped vessel can say its new schedule', () => {
+  const now = new Date('2026-11-21T02:00:00Z');
+  assert.equal(G.pauseText({ paused: { on: true, resumeDate: '2026-12-01', newSchedule: 'Daily 7:00 AM' } }, now),
+    'Not sailing · Resumes Dec 1 · New schedule: Daily 7:00 AM');
+  assert.equal(G.pauseText({ paused: { on: true, newSchedule: 'Daily 7:00 AM' } }, now),
+    'Not sailing until further notice · New schedule: Daily 7:00 AM');
+});

@@ -430,7 +430,8 @@
     if (!p || !p.on) return '';
     var resume = str(p.resumeDate);
     if (resume && resume <= manilaToday(now)) return '';
-    return resume ? 'Not sailing · ' + resumeText(resume) : 'Not sailing until further notice';
+    var then = str(p.newSchedule) ? ' · New schedule: ' + str(p.newSchedule) : '';
+    return (resume ? 'Not sailing · ' + resumeText(resume) : 'Not sailing until further notice') + then;
   }
 
   /** Ports with at least one route leaving them, A–Z. */
