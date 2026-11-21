@@ -246,7 +246,7 @@
     return w;
   }
 
-  var VESSEL_TYPE = { FASTCRAFT: 'Fastcraft', PASSENGER_BOAT: 'Passenger boat', PUMPBOAT: 'Pumpboat / motorbanca', BANKA: 'Banka' };
+  var VESSEL_TYPE = { FASTCRAFT: 'Fastcraft', PASSENGER_BOAT: 'Passenger boat', PUMPBOAT: 'Motorbanca', BANKA: 'Banka' };
 
   function routeList(routes) {
     var wrap = el('div', 'g-rows');
@@ -750,7 +750,7 @@
       if (routes.length || townBoats.length || townFares.length) {
         var g = section('Getting there and around', 'Fares and trips change with the season and weather — confirm with the operator.');
         if (routes.length) add(g, el('h3', 'g-h3', 'Ferries from ' + ports.map(function (p) { return p.name; }).join(', ')), routeList(routes));
-        if (townBoats.length) add(g, el('h3', 'g-h3', 'Banka & pumpboat'), boatList(townBoats));
+        if (townBoats.length) add(g, el('h3', 'g-h3', 'Banka & motorbanca'), boatList(townBoats));
         if (townFares.length) add(g, el('h3', 'g-h3', 'Tricycle fares'), fareTable(townFares));
         page.appendChild(g);
       }

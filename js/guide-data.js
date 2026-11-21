@@ -402,7 +402,7 @@
   function pasalubongKind(p) { return p.kind === 'center' ? 'Pasalubong center' : 'Maker'; }
 
   // ── Port departures board ──────────────────────────────────────────
-  var BOAT_TYPE = { FASTCRAFT: 'Fastcraft', PASSENGER_BOAT: 'Passenger boat', PUMPBOAT: 'Pumpboat / motorbanca', BANKA: 'Banka' };
+  var BOAT_TYPE = { FASTCRAFT: 'Fastcraft', PASSENGER_BOAT: 'Passenger boat', PUMPBOAT: 'Motorbanca', BANKA: 'Banka' };
 
   /** "Friday" — the weekday in Manila. */
   function manilaWeekday(now) {
