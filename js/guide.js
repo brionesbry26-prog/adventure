@@ -271,7 +271,7 @@
       add(a, el('strong', null, (s.status === 'cancelled' ? 'Cancelled: ' : 'Delayed: ') + G.str(s.label || (s.from + ' → ' + s.to))),
         el('p', null, [s.effectiveDate === s.untilDate || !s.untilDate ? s.effectiveDate : s.effectiveDate + ' to ' + s.untilDate,
           s.departureTime ? 'the ' + s.departureTime + ' trip' : '',
-          s.newDepartureTime ? 'now ' + s.newDepartureTime : '', s.reason].filter(Boolean).join(' · ')));
+          s.newDepartureTime ? 'now ' + s.newDepartureTime : '', s.reason, G.resumeText(s.resumeDate)].filter(Boolean).join(' · ')));
       wrap.appendChild(a);
     });
     return wrap;
@@ -814,8 +814,9 @@
       board.appendChild(cols);
       rows.forEach(function (x) {
         var row = el('div', 'g-board-row' + (x.status ? ' ' + x.status : ''));
-        var status = x.status === 'cancelled' ? 'Cancelled'
-          : x.status === 'delayed' ? 'Delayed' + (x.newTime ? ' → ' + x.newTime : '') : 'On schedule';
+        var status = x.status === 'paused' ? x.pause
+          : x.status === 'cancelled' ? 'Cancelled' + (x.resume ? ' · ' + x.resume : '')
+            : x.status === 'delayed' ? 'Delayed' + (x.newTime ? ' → ' + x.newTime : '') + (x.resume ? ' · ' + x.resume : '') : 'On schedule';
         var st = el('span', 'g-board-status ' + (x.status || 'ok'), status);
         if (x.reason) st.title = x.reason;
         add(row,

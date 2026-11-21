@@ -418,6 +418,21 @@
     return h * 60 + +m[2];
   }
 
+  /** "Resumes Nov 25" from 'YYYY-MM-DD' ('' when not set). */
+  function resumeText(d) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(str(d));
+    return m ? 'Resumes ' + MONTHS[+m[2] - 1].slice(0, 3) + ' ' + (+m[3]) : '';
+  }
+
+  /** A vessel not sailing for now: its note, or '' when it sails. */
+  function pauseText(ferry, now) {
+    var p = ferry && ferry.paused;
+    if (!p || !p.on) return '';
+    var resume = str(p.resumeDate);
+    if (resume && resume <= manilaToday(now)) return '';
+    return resume ? 'Not sailing · ' + resumeText(resume) : 'Not sailing until further notice';
+  }
+
   /** Ports with at least one route leaving them, A–Z. */
   function boardPorts(terminals) {
     return (terminals || []).filter(function (t) {
@@ -438,6 +453,7 @@
     var weekday = manilaWeekday(now);
     var rows = [];
     (t.ferries || []).forEach(function (f) {
+      var pause = pauseText(f, now);
       (f.routes || []).forEach(function (r) {
         if (!str(r.from) || !str(r.to)) return;
         var st = live.filter(function (s) { return (s.routeId && s.routeId === r.id) || (!s.routeId && str(s.from) === str(r.from) && str(s.to) === str(r.to)); })[0];
@@ -452,9 +468,11 @@
             operator: str(f.name),
             type: BOAT_TYPE[str(f.vesselType)] || '',
             days: daysText(days),
-            status: st ? st.status : '',
+            status: pause ? 'paused' : st ? st.status : '',
+            pause: pause,
+            resume: st ? resumeText(st.resumeDate) : '',
             newTime: st ? str(st.newDepartureTime) : '',
-            reason: st ? str(st.reason) : ''
+            reason: pause ? str(f.paused.reason) : st ? str(st.reason) : ''
           });
         });
       });
@@ -464,6 +482,7 @@
 
   var api = {
     manilaWeekday: manilaWeekday, boardPorts: boardPorts, portBoard: portBoard,
+    resumeText: resumeText, pauseText: pauseText,
     toursShown: toursShown, tourRoute: tourRoute, tourPrice: tourPrice, tourIncluded: tourIncluded,
     tourMonths: tourMonths, tourOffer: tourOffer, toursForPlace: toursForPlace,
     pasalubongShown: pasalubongShown, pasalubongPhone: pasalubongPhone, pasalubongKind: pasalubongKind,

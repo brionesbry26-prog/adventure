@@ -210,3 +210,20 @@ test('a port departures board: one row per sailing, by time, with live status', 
   assert.deepEqual(G.boardPorts(terminals).map((p) => p.name), ['Romblon Port']);
   assert.equal(G.manilaWeekday(fri), 'Friday');
 });
+
+test('resume dates: advisories say when, a paused vessel says not sailing', () => {
+  assert.equal(G.resumeText('2026-11-25'), 'Resumes Nov 25');
+  assert.equal(G.resumeText(''), '');
+  const terminals = [{ id: 't1', name: 'Romblon Port', ferries: [
+    { name: 'Starhorse', paused: { on: true, resumeDate: '2026-12-01', reason: 'Dry dock' },
+      routes: [{ id: 'r1', from: 'Romblon Port', to: 'Lucena Port', daySchedules: [{ open: '07:00 PM', days: ['Friday'] }] }] },
+    { name: 'Montenegro', paused: { on: true, resumeDate: '2026-11-20' },
+      routes: [{ id: 'r2', from: 'Romblon Port', to: 'Batangas Port', daySchedules: [{ open: '08:00 PM', days: ['Friday'] }] }] },
+  ] }];
+  const rows = G.portBoard(terminals, [{ routeId: 'r2', status: 'cancelled', untilDate: '2026-11-21', resumeDate: '2026-11-22' }], 'Romblon Port', false, new Date('2026-11-21T02:00:00Z'));
+  assert.equal(rows[0].status, 'paused');
+  assert.equal(rows[0].pause, 'Not sailing · Resumes Dec 1');
+  assert.equal(rows[0].reason, 'Dry dock');
+  assert.equal(rows[1].status, 'cancelled');
+  assert.equal(rows[1].resume, 'Resumes Nov 22');
+});
